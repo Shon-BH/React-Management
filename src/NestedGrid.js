@@ -9,6 +9,14 @@ import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DatePicker from '@mui/lab/DatePicker';
 
+import HorizonLine from './HorizontalLine';
+
+import Tables from './Tables';
+
+// 아이콘 사용=============================================
+import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
+import WebAssetIcon from '@mui/icons-material/WebAsset';
+
 const Item = styled(Paper)(({ theme }) => ({
   ...theme.typography.body2,
   padding: theme.spacing(1),
@@ -99,21 +107,32 @@ function SecondFormRow() {
   }
 
 export default function NestedGrid() {
-  return (
-    <Box sx={{ flexGrow: 1 }}>
-      <Grid container spacing={1}>
-        <Grid container item spacing={3}>
-          <FirstFormRow />
-        </Grid>
-        {/* <Grid container item spacing={3}>
-          <FormRow />
-        </Grid> */}
-        <Grid container item spacing={3}>
-          <SecondFormRow />
-        </Grid>
-      </Grid>
-    </Box>
-  );
+    return (
+        <Box sx={{ flexGrow: 1 }}>
+            <h1><WebAssetIcon />생산계획등록</h1>
+            
+            <Grid container spacing={1}>
+                <Grid container item spacing={3}>
+                    <FirstFormRow/>
+                </Grid>
+                
+                {/* <Grid container item spacing={3}>
+                    <FormRow />
+                </Grid> */}
+            
+                <Grid container item spacing={3}>
+                    <SecondFormRow />
+                </Grid>
+                <HorizonLine />
+            </Grid>
+
+            <h1><FormatListBulletedIcon /> 목록</h1>
+                <Tables />
+            <h1><FormatListBulletedIcon /> 상세</h1>
+                <Tables />
+        </Box>
+        
+    );
 }
 
 /*
