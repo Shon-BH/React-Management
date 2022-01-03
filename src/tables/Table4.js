@@ -22,26 +22,16 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import { visuallyHidden } from '@mui/utils';
 
-function createData(id1, id2, id3, id4, id5, id6, id7, id8, id9) {
+function createData(id1, id2, id3, id4, id5) {
     return {
-        id1, id2, id3, id4, id5, id6, id7, id8, id9
+        id1, id2, id3, id4, id5
     };
 }
 
 const rows = [
-  createData('Cupcake', 305, 3.7, 67, 4.3, 305, 3.7, 67, 4.3),
-  createData('Donut', 452, 25.0, 51, 4.9, 305, 3.7, 67, 4.3),
-  createData('Eclair', 262, 16.0, 24, 6.0, 305, 3.7, 67, 4.3),
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0, 305, 3.7, 67, 4.3),
-  createData('Gingerbread', 356, 16.0, 49, 3.9, 305, 3.7, 67, 4.3),
-  createData('Honeycomb', 408, 3.2, 87, 6.5, 305, 3.7, 67, 4.3),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3, 305, 3.7, 67, 4.3),
-  createData('Jelly Bean', 375, 0.0, 94, 0.0, 305, 3.7, 67, 4.3),
-  createData('KitKat', 518, 26.0, 65, 7.0, 305, 3.7, 67, 4.3),
-  createData('Lollipop', 392, 0.2, 98, 0.0, 305, 3.7, 67, 4.3),
-  createData('Marshmallow', 318, 0, 81, 2.0, 305, 3.7, 67, 4.3),
-  createData('Nougat', 360, 19.0, 9, 37.0, 305, 3.7, 67, 4.3),
-  createData('Oreo', 437, 18.0, 63, 4.0, 305, 3.7, 67, 4.3),
+  createData(1, '1074℃ 88분 ', '1232℃ 72분', '1230℃ 38분', '2021-12-22 07:08:25 '),
+  createData(1, '1074℃ 88분 ', '1232℃ 72분', '1230℃ 38분', '2021-12-22 07:08:25 '),
+  createData(1, '1074℃ 88분 ', '1232℃ 72분', '1230℃ 38분', '2021-12-22 07:08:25 '),
 ];
 
 function descendingComparator(a, b, orderBy) {
@@ -79,55 +69,31 @@ const headCells = [
         id: 'id1',
         numeric: false,
         disablePadding: true,
-        label: '회사',
+        label: '가열로 번호',
     },
     {
         id: 'id2',
         numeric: true,
         disablePadding: false,
-        label: '사업장',
+        label: '예열대',
     },
     {
         id: 'id3',
         numeric: true,
         disablePadding: false,
-        label: '등록일',
-    },
+        label: '가열대',
+  },
     {
         id: 'id4',
         numeric: true,
         disablePadding: false,
-        label: '총수량',
-    },
+        label: '균열대',
+  },
     {
         id: 'id5',
         numeric: true,
         disablePadding: false,
-        label: '담당자',
-    },
-    {
-        id: 'id6',
-        numeric: true,
-        disablePadding: false,
-        label: '생성일',
-    },
-    {
-        id: 'id7',
-        numeric: true,
-        disablePadding: false,
-        label: '생성자',
-    },
-    {
-        id: 'id8',
-        numeric: true,
-        disablePadding: false,
-        label: '수정일',
-    },
-    {
-        id: 'id9',
-        numeric: true,
-        disablePadding: false,
-        label: '수정자',
+        label: '측정일시',
     },
 ];
 
@@ -359,13 +325,9 @@ export default function EnhancedTable() {
                         {row.id1}
                       </TableCell>
                         <TableCell align="right">{row.id2}</TableCell>
-                            <TableCell align="right">{row.id3}</TableCell>
-                            <TableCell align="right">{row.id4}</TableCell>
-                            <TableCell align="right">{row.id5}</TableCell>
-                            <TableCell align="right">{row.id6}</TableCell>
-                            <TableCell align="right">{row.id7}</TableCell>
-                            <TableCell align="right">{row.id8}</TableCell>
-                            <TableCell align="right">{row.id9}</TableCell>
+                      <TableCell align="right">{row.id3}</TableCell>
+                      <TableCell align="right">{row.id4}</TableCell>
+                      <TableCell align="right">{row.id5}</TableCell>
                     </TableRow>
                   );
                 })}

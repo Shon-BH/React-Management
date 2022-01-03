@@ -11,8 +11,7 @@ import DatePicker from '@mui/lab/DatePicker';
 
 import HorizonLine from './HorizontalLine';
 
-import Table1 from './tables/Table1';
-import Table2 from './tables/Table2';
+import Table5 from './tables/Table5';
 
 import Combobox from './Combobox';
 
@@ -76,32 +75,6 @@ function SecondFormRow() {
           </Item>
           {/* <Item>Item</Item> */}
         </Grid>
-        <Grid item xs={2}>
-            <Item>
-                <TextField 
-                    id="filled-read-only-input" 
-                    label="연락처"
-                    InputProps={{
-                        readOnly: true,
-                    }} 
-                    variant="filled"
-                    value="010-1234-4567" 
-                />
-            </Item>
-        </Grid>
-        <Grid item xs={2}>
-            <Item>
-                <TextField 
-                    id="filled-read-only-input" 
-                    label="이메일"
-                    InputProps={{
-                        readOnly: true,
-                    }} 
-                    variant="filled"
-                    value="sjw3957@gmail.com" 
-                />
-            </Item>
-        </Grid>
       </React.Fragment>
     );
   }
@@ -109,16 +82,10 @@ function SecondFormRow() {
 export default function NestedGrid() {
     return (
         <Box sx={{ flexGrow: 1 }}>
-            <h1><WebAssetIcon />생산계획등록</h1>
-            
             <Grid container spacing={1}>
                 <Grid container item spacing={3}>
                     <FirstFormRow />
                 </Grid>
-                
-                {/* <Grid container item spacing={3}>
-                    <FormRow />
-                </Grid> */}
             
                 <Grid container item spacing={3}>
                     <SecondFormRow />
@@ -127,9 +94,7 @@ export default function NestedGrid() {
             </Grid>
 
             <h1><FormatListBulletedIcon />상세정보</h1>
-                <Table1 />
-            <h1><FormatListBulletedIcon />코일정보</h1>
-                <Table2 />
+                <Table5 />
         </Box>
         
     );

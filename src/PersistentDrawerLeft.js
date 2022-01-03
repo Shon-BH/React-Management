@@ -85,19 +85,19 @@ export default function PersistentDrawerLeft({selectMenu}) {
 
   const subMenuList = [
     {
-      text:'home',
+      text:'생산계획등록',
       link: '/'      
     },
     {
-      text:'Inbox',
+      text:'생산계획목록',
       link: '/submenu/inbox'      
     },
     {
-      text:'Starred',
+      text:'공정 데이터 모니터링',
       link: '/submenu/starred'      
     },
     {
-      text: 'Drafts',
+      text: '가열로 데이터 모니터링',
       link: '/submenu/drafts'      
     },
     
