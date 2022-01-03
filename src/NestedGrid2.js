@@ -15,9 +15,7 @@ import Table5 from './tables/Table5';
 
 import Combobox from './Combobox';
 
-// 아이콘 사용=============================================
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
-import WebAssetIcon from '@mui/icons-material/WebAsset';
 
 const Item = styled(Paper)(({ theme }) => ({
   ...theme.typography.body2,
@@ -73,7 +71,6 @@ function SecondFormRow() {
                 value="손준우" 
             />
           </Item>
-          {/* <Item>Item</Item> */}
         </Grid>
       </React.Fragment>
     );

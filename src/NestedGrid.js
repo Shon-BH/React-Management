@@ -16,7 +16,6 @@ import Table2 from './tables/Table2';
 
 import Combobox from './Combobox';
 
-// 아이콘 사용=============================================
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import WebAssetIcon from '@mui/icons-material/WebAsset';
 
