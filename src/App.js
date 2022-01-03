@@ -1,25 +1,39 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
+import SignIn from "./components/SignIn";
+import SignUp from "./components/SignUp";
+import PersistentDrawerLeft from './PersistentDrawerLeft';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Hello!
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Router>
+        <Switch>
+          <Route path="/signin">
+            <SignIn/>
+          </Route>
+
+          <Route path="/signup">
+            <SignUp/>
+          </Route>
+          
+          <Route path="/submenu/inbox">
+            <PersistentDrawerLeft selectMenu={'inbox'}/>
+          </Route>
+          <Route path="/submenu/drafts">
+            <PersistentDrawerLeft selectMenu={'drafts'}/>
+          </Route>
+          <Route path="/submenu/starred">
+            <PersistentDrawerLeft selectMenu={'starred'}/>              
+          </Route>
+          <Route path="/">
+            <PersistentDrawerLeft selectMenu={'home'}/>
+          </Route>
+        </Switch>
+      </Router>
     </div>
   );
 }
 
 export default App;
+
