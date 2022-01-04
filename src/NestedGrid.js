@@ -46,8 +46,8 @@ function BasicDatePicker() {
 function FirstFormRow() {
   return (
     <React.Fragment>
-        <Grid item xs={2}>
-            <Item><Combobox/></Item>
+      <Grid item xs={2}>
+          <Item><Combobox/></Item>
         </Grid>
           
         <Grid item xs={2}>
@@ -114,11 +114,6 @@ export default function NestedGrid() {
                 <Grid container item spacing={3}>
                     <FirstFormRow />
                 </Grid>
-                
-                {/* <Grid container item spacing={3}>
-                    <FormRow />
-                </Grid> */}
-            
                 <Grid container item spacing={3}>
                     <SecondFormRow />
                 </Grid>

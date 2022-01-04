@@ -13,9 +13,11 @@ import HorizonLine from './HorizontalLine';
 
 import Table5 from './tables/Table5';
 
-import Combobox from './Combobox';
-
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
+
+import InputBase from '@mui/material/InputBase';
+import IconButton from '@mui/material/IconButton';
+import SearchIcon from '@mui/icons-material/Search';
 
 const Item = styled(Paper)(({ theme }) => ({
   ...theme.typography.body2,
@@ -45,7 +47,18 @@ function FirstFormRow() {
   return (
     <React.Fragment>
         <Grid item xs={2}>
-            <Item><Combobox/></Item>
+          <Item>
+            <Paper>
+            <InputBase
+              sx={{ ml: 10, flex: 1, p:'12px'}}
+              placeholder="회사"
+              inputProps={{ 'aria-label': 'search' }}
+            />
+            <IconButton type="submit" sx={{p:'1px'}} aria-label="search">
+              <SearchIcon />
+            </IconButton>
+            </Paper>
+          </Item>
         </Grid>
           
         <Grid item xs={2}>
@@ -60,16 +73,17 @@ function SecondFormRow() {
     return (
       <React.Fragment>
         <Grid item xs={2}>
-         <Item>
-            <TextField 
-                id="filled-read-only-input" 
-                label="담당자"
-                InputProps={{
-                    readOnly: true,
-                }} 
-                variant="filled"
-                value="손준우" 
+          <Item>
+            <Paper>
+            <InputBase
+              sx={{ ml: 10, flex: 1, p:'12px' }}
+              placeholder="담당자"
+              inputProps={{ 'aria-label': 'search' }}
             />
+            <IconButton type="submit" sx={{ p: '1px' }} aria-label="search">
+              <SearchIcon />
+              </IconButton>
+            </Paper>
           </Item>
         </Grid>
       </React.Fragment>
