@@ -16,7 +16,6 @@ import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
 import NestedGrid from './NestedGrid';
 import { Link } from 'react-router-dom';
 import Inbox from './routes/Inbox';
@@ -85,18 +84,22 @@ export default function PersistentDrawerLeft({selectMenu}) {
 
   const subMenuList = [
     {
+      id: 1,
       text:'생산계획등록',
       link: '/'      
     },
     {
+      id: 2,
       text:'생산계획목록',
       link: '/submenu/inbox'      
     },
     {
+      id: 3,
       text:'공정 데이터 모니터링',
       link: '/submenu/starred'      
     },
     {
+      id: 4,
       text: '가열로 데이터 모니터링',
       link: '/submenu/drafts'      
     },
@@ -144,13 +147,14 @@ export default function PersistentDrawerLeft({selectMenu}) {
         <List>
                     
           {subMenuList.map((obj, index) => (
-              <ListItem button key={obj.text}>
-                  <ListItemIcon>
-                    {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                  </ListItemIcon>
-                  <Link to={obj.link}>
-                    <ListItemText primary={obj.text} />
-                  </Link>
+              <ListItem button key={index}>
+                <ListItemIcon>
+                  <InboxIcon/>
+                </ListItemIcon>
+              
+                <Link to={obj.link}>
+                  <ListItemText primary={obj.text} />
+                </Link>
               </ListItem>
           ))}
 
