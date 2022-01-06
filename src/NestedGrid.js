@@ -27,9 +27,9 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
-function BasicDatePicker(props) {
+function BasicDatePicker() {
     const [value, setValue] = React.useState(null);
-  
+    
     return (
       <LocalizationProvider dateAdapter={AdapterDateFns}>
         <DatePicker
@@ -37,7 +37,6 @@ function BasicDatePicker(props) {
           value={value}
           onChange={(newValue) => {
             setValue(newValue);
-            props.setPlanData({value});
           }}
           renderInput={(params) => <TextField {...params} />}
         />
@@ -53,7 +52,7 @@ function FirstFormRow(props) {
         </Grid>
           
         <Grid item xs={2}>
-          <Item><BasicDatePicker setPlanData= {props.setPlanData} /></Item>
+          <Item><BasicDatePicker/></Item>
         </Grid>
 
     </React.Fragment>
@@ -136,7 +135,16 @@ function SecondFormRow() {
 
 export default function NestedGrid() {
 
-    const [planData, setPlanData] = React.useState("");
+    const [company, setCompany] = React.useState("");
+//    const [regDate, setRegDate] = React.useState("");
+//    const [officer, setOfficer] = React.useState("");
+//    const [email, setEmail] = React.useState("");
+//    const [phoneNum, setphoneNum] = React.useState("");
+    const [processStart, setprocessStart] = React.useState("");
+    const [processEnd, setprocessEnd] = React.useState("");
+    const [productId, setProductId] = React.useState("");
+    const [stockPlan, setStockPlan] = React.useState("");
+
 
     return (
         <Box sx={{ flexGrow: 1 }}>
@@ -145,7 +153,7 @@ export default function NestedGrid() {
               
               <Grid container spacing={1}>
                   <Grid container item spacing={3}>
-                      <FirstFormRow setPlanData={setPlanData} />
+                      <FirstFormRow />
                   </Grid>
                   <Grid container item spacing={3}>
                       <SecondFormRow />
@@ -153,7 +161,7 @@ export default function NestedGrid() {
                   <HorizonLine />
               </Grid>
 
-              <input type="text" value={planData}/>
+              {/* <input type="text" value={planData}/> */}
 
               <Grid container spacing={1}>
               <h1><WebAssetIcon />상세정보</h1>
