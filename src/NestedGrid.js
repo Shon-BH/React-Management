@@ -14,7 +14,8 @@ import HorizonLine from './HorizontalLine';
 import Table1 from './tables/Table1';
 import Table2 from './tables/Table2';
 
-import Combobox from './Combobox';
+import ComboBoxCompany from './comboboxes/ComboBoxCompany';
+import ComboBoxProduct from './comboboxes/ComboBoxProduct';
 
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import WebAssetIcon from '@mui/icons-material/WebAsset';
@@ -26,7 +27,7 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
-function BasicDatePicker() {
+function BasicDatePicker(props) {
     const [value, setValue] = React.useState(null);
   
     return (
@@ -36,6 +37,7 @@ function BasicDatePicker() {
           value={value}
           onChange={(newValue) => {
             setValue(newValue);
+            props.setPlanData({value});
           }}
           renderInput={(params) => <TextField {...params} />}
         />
@@ -43,15 +45,15 @@ function BasicDatePicker() {
     );
 }
 
-function FirstFormRow() {
+function FirstFormRow(props) {
   return (
     <React.Fragment>
       <Grid item xs={2}>
-          <Item><Combobox/></Item>
+          <Item><ComboBoxCompany/></Item>
         </Grid>
           
         <Grid item xs={2}>
-          <Item><BasicDatePicker/></Item>
+          <Item><BasicDatePicker setPlanData= {props.setPlanData} /></Item>
         </Grid>
 
     </React.Fragment>
@@ -105,26 +107,68 @@ function SecondFormRow() {
     );
   }
 
+  function ThirdFormRow() {
+    return (
+      <React.Fragment>
+        
+          <Grid item xs={2}>
+            <Item><BasicDatePicker/></Item>
+          </Grid>
+          <Grid item xs={2}>
+            <Item><BasicDatePicker/></Item>
+          </Grid>
+          <Grid item xs={2}>
+            <Item><ComboBoxProduct/></Item>
+          </Grid>
+          <Grid item xs={2}>
+            <Item>
+              <TextField id="outlined-basic" 
+                          label="수량" 
+                          variant="outlined" 
+                />
+             </Item>
+          {/* <Item>Item</Item> */}
+        </Grid>
+  
+      </React.Fragment>
+    );
+  }
+
 export default function NestedGrid() {
+
+    const [planData, setPlanData] = React.useState("");
+
     return (
         <Box sx={{ flexGrow: 1 }}>
-            <h1><WebAssetIcon />생산계획등록</h1>
-            
-            <Grid container spacing={1}>
-                <Grid container item spacing={3}>
-                    <FirstFormRow />
-                </Grid>
-                <Grid container item spacing={3}>
-                    <SecondFormRow />
-                </Grid>
-                <HorizonLine />
-            </Grid>
+          <form>
+              <h1><WebAssetIcon />생산계획등록</h1>
+              
+              <Grid container spacing={1}>
+                  <Grid container item spacing={3}>
+                      <FirstFormRow setPlanData={setPlanData} />
+                  </Grid>
+                  <Grid container item spacing={3}>
+                      <SecondFormRow />
+                  </Grid>
+                  <HorizonLine />
+              </Grid>
 
-            <h1><FormatListBulletedIcon />상세정보</h1>
+              <input type="text" value={planData}/>
+
+              <Grid container spacing={1}>
+              <h1><WebAssetIcon />상세정보</h1>
+                  <Grid container item spacing={3}>
+                      <ThirdFormRow />
+                  </Grid>
+                  <HorizonLine />
+              </Grid>
+                
+            </form>
+            <h1><FormatListBulletedIcon />주문내역</h1>
                 <Table1 />
             <h1><FormatListBulletedIcon />코일정보</h1>
                 <Table2 />
+
         </Box>
-        
     );
 }
