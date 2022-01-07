@@ -23,17 +23,6 @@ import FilterListIcon from '@mui/icons-material/FilterList';
 import { visuallyHidden } from '@mui/utils';
 import axios from 'axios';
 
-// function createData(id1, id2, id3, id4, id5, id6, id7, id8, id9) {
-//     return {
-//         id1, id2, id3, id4, id5, id6, id7, id8, id9
-//     };
-// }
-
-// const rows = [
-//   createData('A12345', 'B1234', '2021.12.24', '2021.12.25', '(주) 한국철강', '손병훈', 200, 79, '진행중..'),
-//   createData('A12345', 'B1234', '2021.12.24', '2021.12.25', '(주) 한국철강', '손병훈', 200, 79, '완료'),  
-// ];
-
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
     return -1;

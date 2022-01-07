@@ -21,19 +21,7 @@ import Switch from '@mui/material/Switch';
 import DeleteIcon from '@mui/icons-material/Delete';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import { visuallyHidden } from '@mui/utils';
-
-function createData(id1, id2, id3, id4, id5, id6) {
-    return {
-        id1, id2, id3, id4, id5, id6
-    };
-}
-
-const rows = [
-  createData('B1234', '2021-12-24 07:08:25', 2.5/2.530, 1237.7/1255.2, 1045, 'A1234'),
-  createData('B1234', '2021-12-24 07:08:25', 2.5 / 2.530, 1237.7 / 1255.2, 1045, 'A1234'),
-  createData('B1234', '2021-12-24 07:08:25', 2.5 / 2.530, 1237.7 / 1255.2, 1045, 'A1234'),
-  createData('B1234', '2021-12-24 07:08:25', 2.5/2.530, 1237.7/1255.2, 1045, 'A1234'),
-];
+import axios from 'axios';
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -70,37 +58,37 @@ const headCells = [
         id: 'id1',
         numeric: false,
         disablePadding: true,
-        label: '코일번호',
+        label: '코일 번호',
     },
     {
         id: 'id2',
         numeric: true,
         disablePadding: false,
-        label: '압연일시',
+        label: '코일 두께',
     },
     {
         id: 'id3',
         numeric: true,
         disablePadding: false,
-        label: '코일 두께',
+        label: '코일 넓이',
   },
     {
         id: 'id4',
         numeric: true,
         disablePadding: false,
-        label: '코일 폭',
+        label: '코일 길이',
   },
     {
         id: 'id5',
         numeric: true,
         disablePadding: false,
-        label: '코일 길이',
+        label: '공정 현황',
   },
     {
         id: 'id6',
         numeric: true,
         disablePadding: false,
-        label: '주문번호',
+        label: '공정완료 시간',
     },
 ];
 
@@ -190,7 +178,6 @@ const EnhancedTableToolbar = (props) => {
           id="tableTitle"
           component="div"
         >
-          Nutrition
         </Typography>
       )}
 
@@ -222,6 +209,16 @@ export default function EnhancedTable() {
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [rows, setRows] = React.useState([]);
+
+  const productLogFunc = async () => {
+    const jsonData = await axios.get("/process-service/product_log");
+    setRows(jsonData.data);
+  }  
+
+  React.useEffect(()=>{
+    productLogFunc();
+  },[]);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -329,13 +326,13 @@ export default function EnhancedTable() {
                         scope="row"
                         padding="none"
                       >
-                        {row.id1}
+                        {row.product_id}
                       </TableCell>
-                        <TableCell align="right">{row.id2}</TableCell>
-                      <TableCell align="right">{row.id3}</TableCell>
-                      <TableCell align="right">{row.id4}</TableCell>
-                      <TableCell align="right">{row.id5}</TableCell>
-                      <TableCell align="right">{row.id6}</TableCell>
+                        <TableCell align="right">{row.thickness}</TableCell>
+                      <TableCell align="right">{row.width}</TableCell>
+                      <TableCell align="right">{row.length}</TableCell>
+                      <TableCell align="right">{row.product_status}</TableCell>
+                      <TableCell align="right">{row.product_update}</TableCell>
                     </TableRow>
                   );
                 })}
