@@ -2,14 +2,14 @@ import * as React from 'react';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 
-export default function ComboBox() {
+export default function ComboBoxProduct() {
   return (
     <Autocomplete
       disablePortal
       id="combo-box-demo"
       options={top100Films}
       sx={{ width: 165, display: 'inline'}}
-      renderInput={(params) => <TextField {...params} label="회사" />}
+      renderInput={(params) => <TextField {...params} label="상품정보" />}
     />
   );
 }
