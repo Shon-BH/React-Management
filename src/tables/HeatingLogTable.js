@@ -21,18 +21,7 @@ import Switch from '@mui/material/Switch';
 import DeleteIcon from '@mui/icons-material/Delete';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import { visuallyHidden } from '@mui/utils';
-
-function createData(id1, id2, id3, id4, id5) {
-    return {
-        id1, id2, id3, id4, id5
-    };
-}
-
-const rows = [
-  createData(1, '1074℃ 88분 ', '1232℃ 72분', '1230℃ 38분', '2021-12-22 07:08:25 '),
-  createData(1, '1074℃ 88분 ', '1232℃ 72분', '1230℃ 38분', '2021-12-22 07:08:25 '),
-  createData(1, '1074℃ 88분 ', '1232℃ 72분', '1230℃ 38분', '2021-12-22 07:08:25 '),
-];
+import axios from 'axios';
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -54,6 +43,7 @@ function getComparator(order, orderBy) {
 // need to support IE11, you can use Array.prototype.sort() directly
 function stableSort(array, comparator) {
   const stabilizedThis = array.map((el, index) => [el, index]);
+
   stabilizedThis.sort((a, b) => {
     const order = comparator(a[0], b[0]);
     if (order !== 0) {
@@ -66,40 +56,35 @@ function stableSort(array, comparator) {
 
 const headCells = [
   {
-        id: 'id1',
-        numeric: false,
-        disablePadding: true,
-        label: '가열로 번호',
-    },
-    {
-        id: 'id2',
-        numeric: true,
-        disablePadding: false,
-        label: '예열대',
-    },
-    {
-        id: 'id3',
-        numeric: true,
-        disablePadding: false,
-        label: '가열대',
+    id: 'name',
+    numeric: false,
+    disablePadding: true,
+    label: '가열로 번호',
   },
-    {
-        id: 'id4',
-        numeric: true,
-        disablePadding: false,
-        label: '균열대',
+  {
+    numeric: true,
+    disablePadding: false,
+    label: '예열대 온도',
   },
-    {
-        id: 'id5',
-        numeric: true,
-        disablePadding: false,
-        label: '측정일시',
-    },
+  {
+    numeric: true,
+    disablePadding: false,
+    label: '가열대 온도',
+  },
+  {
+    numeric: true,
+    disablePadding: false,
+    label: '균열대 온도',
+  },
+  {
+    numeric: true,
+    disablePadding: false,
+    label: '온도 측정시간',
+  },
 ];
 
 function EnhancedTableHead(props) {
-  const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } =
-    props;
+  const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } = props;
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
   };
@@ -162,8 +147,7 @@ const EnhancedTableToolbar = (props) => {
         pl: { sm: 2 },
         pr: { xs: 1, sm: 1 },
         ...(numSelected > 0 && {
-          bgcolor: (theme) =>
-            alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity),
+          bgcolor: (theme) => alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity),
         }),
       }}
     >
@@ -183,7 +167,6 @@ const EnhancedTableToolbar = (props) => {
           id="tableTitle"
           component="div"
         >
-          Nutrition
         </Typography>
       )}
 
@@ -215,6 +198,16 @@ export default function EnhancedTable() {
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [rows, setRows] = React.useState([]);
+
+  const HeatingLogFunc = async () => {
+    const jsonData = await axios.get("/process-service/heating_furnance_temperature_log");
+    setRows(jsonData.data);
+  }  
+
+  React.useEffect(()=>{
+    HeatingLogFunc();
+  },[]);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -267,8 +260,7 @@ export default function EnhancedTable() {
   const isSelected = (name) => selected.indexOf(name) !== -1;
 
   // Avoid a layout jump when reaching the last page with empty rows.
-  const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
+  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
   return (
     <Box sx={{ width: '100%' }}>
@@ -322,12 +314,12 @@ export default function EnhancedTable() {
                         scope="row"
                         padding="none"
                       >
-                        {row.id1}
+                        {row.heating_furnance_id}
                       </TableCell>
-                        <TableCell align="right">{row.id2}</TableCell>
-                      <TableCell align="right">{row.id3}</TableCell>
-                      <TableCell align="right">{row.id4}</TableCell>
-                      <TableCell align="right">{row.id5}</TableCell>
+                      <TableCell align="right">{row.preheating_zone_temp}</TableCell>
+                      <TableCell align="right">{row.heating_zone_temp}</TableCell>
+                      <TableCell align="right">{row.soaking_zone_temp}</TableCell>
+                      <TableCell align="right">{row.heating_furnance_update}</TableCell>
                     </TableRow>
                   );
                 })}

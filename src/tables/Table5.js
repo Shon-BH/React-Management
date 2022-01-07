@@ -21,17 +21,7 @@ import Switch from '@mui/material/Switch';
 import DeleteIcon from '@mui/icons-material/Delete';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import { visuallyHidden } from '@mui/utils';
-
-function createData(id1, id2, id3, id4, id5, id6, id7, id8, id9) {
-    return {
-        id1, id2, id3, id4, id5, id6, id7, id8, id9
-    };
-}
-
-const rows = [
-  createData('A12345', 'B1234', '2021.12.24', '2021.12.25', '(주) 한국철강', '손병훈', 200, 79, '진행중..'),
-  createData('A12345', 'B1234', '2021.12.24', '2021.12.25', '(주) 한국철강', '손병훈', 200, 79, '완료'),
-];
+import axios from 'axios';
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -65,8 +55,8 @@ function stableSort(array, comparator) {
 
 const headCells = [
   {
-        id: 'id1',
-        numeric: false,
+        id: 'id1',        
+        umeric: false,
         disablePadding: true,
         label: '주문번호',
     },
@@ -119,6 +109,7 @@ const headCells = [
         label: '주문상태',
     },
 ];
+
 
 function EnhancedTableHead(props) {
   const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } =
@@ -231,6 +222,7 @@ EnhancedTableToolbar.propTypes = {
   numSelected: PropTypes.number.isRequired,
 };
 
+
 export default function EnhancedTable() {
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');
@@ -238,6 +230,17 @@ export default function EnhancedTable() {
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [rows, setRows] = React.useState([]);
+
+  const ordersFunc = async () => {
+    const jsonData = await axios.get("/process-service/orders");
+    setRows(jsonData.data);
+    //console.log(jsonData.data);
+  }  
+
+  React.useEffect(()=>{
+    ordersFunc();
+  },[]);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -318,8 +321,7 @@ export default function EnhancedTable() {
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
                   const isItemSelected = isSelected(row.name);
-                  const labelId = `enhanced-table-checkbox-${index}`;
-
+                  const labelId = `enhanced-table-checkbox-${index}`;                  
                   return (
                     <TableRow
                       hover
@@ -345,16 +347,16 @@ export default function EnhancedTable() {
                         scope="row"
                         padding="none"
                       >
-                        {row.id1}
+                        {row.order_id}
                       </TableCell>
-                        <TableCell align="right">{row.id2}</TableCell>
-                      <TableCell align="right">{row.id3}</TableCell>
-                      <TableCell align="right">{row.id4}</TableCell>
+                       <TableCell align="right">{row.product_id}</TableCell>
+                      <TableCell align="right">{row.process_start}</TableCell>
+                      <TableCell align="right">{row.process_end}</TableCell>
                       <TableCell align="right">{row.id5}</TableCell>
-                      <TableCell align="right">{row.id6}</TableCell>
-                      <TableCell align="right">{row.id7}</TableCell>
+                      <TableCell align="right">{row.user_id}</TableCell>
+                      <TableCell align="right">{row.stock_plan}</TableCell>
                       <TableCell align="right">{row.id8}</TableCell>
-                      <TableCell align="right">{row.id9}</TableCell>
+                      <TableCell align="right">{row.status}</TableCell>
                     </TableRow>
                   );
                 })}
