@@ -26,6 +26,9 @@ function App() {
           <Route path="/submenu/starred">
             <PersistentDrawerLeft selectMenu={'starred'}/>              
           </Route>
+          <Route path="/submenu/admin">
+            <PersistentDrawerLeft selectMenu={'admin'}/>              
+          </Route>
           <Route path="/">
             <PersistentDrawerLeft selectMenu={'home'}/>
           </Route>
