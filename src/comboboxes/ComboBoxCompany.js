@@ -1,18 +1,42 @@
-import * as React from 'react';
+import { useEffect, useState } from 'react';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
+import axios from 'axios';
+
 
 export default function ComboboxCompany({setCompany}) {
+  
+  const [companyList, setCompanyList] = useState([]);
+
+  useEffect(()=> {
+
+    const event = async() => {
+      const jsonData = await axios.get("/process-service/companies");
+      //console.log(jsonData.data);
+      let tempList = [];
+      jsonData.data.map( (v) =>{
+        tempList.push({
+          label : v.name,
+          companyId : v.companyId,
+        });
+      });
+      setCompanyList(tempList);
+    }
+    
+    event(); 
+    
+  },[]);
+
   return (
     <Autocomplete
       disablePortal
       id="combo-box-demo"
-      options={top100Films}
+      options={companyList}
       sx={{ width: 165, display: 'inline'}}
       renderInput={(params) => <TextField {...params} label="회사" />}
       onChange={(e,val)=>{          
           console.log(val);
-          setCompany(val);
+          setCompany(val.companyId);
       }}
     />
   );

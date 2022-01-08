@@ -5,10 +5,6 @@ import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 
-import AdapterDateFns from '@mui/lab/AdapterDateFns';
-import LocalizationProvider from '@mui/lab/LocalizationProvider';
-import DatePicker from '@mui/lab/DatePicker';
-
 import HorizonLine from './HorizontalLine';
 
 import Table1 from './tables/Table1';
@@ -20,6 +16,7 @@ import ComboBoxProduct from './comboboxes/ComboBoxProduct';
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import WebAssetIcon from '@mui/icons-material/WebAsset';
 import axios from 'axios';
+import BasicDatePicker from './date/BasicDatePicker';
 
 const Item = styled(Paper)(({ theme }) => ({
   ...theme.typography.body2,
@@ -28,25 +25,26 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
-function BasicDatePicker({setDate}) {
-    const [value, setValue] = React.useState(null);
-    
-    return (
-      <LocalizationProvider dateAdapter={AdapterDateFns}>
-        <DatePicker
-          label="Basic example"
-          value={value}
-          onChange={(newValue) => {
-            setValue(newValue);
-            setDate(newValue);
-          }}
-          renderInput={(params) => <TextField {...params} />}
-        />
-      </LocalizationProvider>
-    );
+
+function NewFormatDate(newDate){
+  newDate = leadingZeros(newDate.getFullYear(), 4) + '-' +
+          leadingZeros(newDate.getMonth() + 1, 2) + '-' +
+          leadingZeros(newDate.getDate(), 2);
+  return newDate;
 }
 
-function FirstFormRow({setCompany}) {
+function leadingZeros(n, digits) {
+  var zero = '';
+  n = n.toString();
+
+  if (n.length < digits) {
+      for (let i = 0; i < digits - n.length; i++)
+          zero += '0';
+  }
+  return zero + n;
+}
+
+function FirstFormRow({setCompany, regDate}) {
   return (
     <React.Fragment>
       <Grid item xs={2}>
@@ -54,7 +52,17 @@ function FirstFormRow({setCompany}) {
         </Grid>
           
         <Grid item xs={2}>
-          <Item><BasicDatePicker/></Item>
+          <Item>
+            <TextField 
+                  id="filled-read-only-input" 
+                  label="등록일"
+                  InputProps={{
+                      readOnly: true,
+                  }} 
+                  variant="filled"
+                  value={regDate} 
+              />
+          </Item>
         </Grid>
 
     </React.Fragment>
@@ -100,7 +108,7 @@ function SecondFormRow() {
                         readOnly: true,
                     }} 
                     variant="filled"
-                    value="sjw3957@gmail.com" 
+                    value = "sjw3957@gmail.com"
                 />
             </Item>
         </Grid>
@@ -123,13 +131,18 @@ function SecondFormRow() {
           </Grid>
           <Grid item xs={2}>
             <Item>
-              <TextField id="outlined-basic" 
-                          label="수량" 
-                          variant="outlined"
-                          onChange={(e)=>{
-                            setStockPlan(e.target.value);
-                          }}
-                />
+                <TextField
+                    id="standard-number"
+                    label="Number"
+                    type="number"
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    variant="standard"
+                    onChange={(e)=>{
+                      setStockPlan(e.target.value);
+                    }}
+              />
              </Item>
           {/* <Item>Item</Item> */}
         </Grid>
@@ -144,39 +157,54 @@ export default function NestedGrid() {
       label: '',
       companyId: '',      
     });
-//    const [regDate, setRegDate] = React.useState("");
+
+    const date = NewFormatDate(new Date());
+    const [regDate, setRegDate] = React.useState(date);
 //    const [officer, setOfficer] = React.useState("");
 //    const [email, setEmail] = React.useState("");
 //    const [phoneNum, setphoneNum] = React.useState("");
-    const [processStart, setProcessStart] = React.useState("");
-    const [processEnd, setProcessEnd] = React.useState("");
+    const [processStart, setProcessStart] = React.useState(date);
+    const [processEnd, setProcessEnd] = React.useState(date);
     const [productId, setProductId] = React.useState("");
    
-    const [stockPlan, setStockPlan] = React.useState("");
-    
-    const f1 = () => {
-      let jsonData = {
-        companyId : company.companyId,
-        processStart : processStart,
-        processEnd : processEnd
-      }
+    const [stockPlan, setStockPlan] = React.useState(0);
+    const [productList, setProductList] = React.useState([]);
 
-      // axios.post('/process-service/orders', JSON.stringify(jsonData) ,{
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      // })
-      // .then(
-      //   (res) =>{console.log(res.data);}
-      // )
+    const ProductAPI = async() => {
+      const jsonData = await axios.get("/process-service/products");
+      //console.log(jsonData.data);
+      let tempList = [];
+      jsonData.data.map( (v) =>{
+        tempList.push(v);
+      });
+      setProductList(tempList);
+    }
+
+    React.useEffect(()=> {
+        ProductAPI();
+    },[]);
+    const f1 = () => {
+
+      const check = /\d/;
       
-      // console.log(company);      
-      // console.log(processStart);
-      // console.log(processEnd);
-      // console.log(productId);
-      // console.log(stockPlan);
-      
-      console.log(typeof new Date());
+      if(processStart > processEnd){
+         alert("시작일이 더 큽니다."); 
+         setProcessStart(date);
+         setProcessEnd(date);
+      } else if(!check.test(stockPlan)){
+        alert("수량이 숫자가 아닙니다.");
+        setStockPlan(0);
+      }
+      else{
+        // axios.post('/process-service/orders', JSON.stringify(jsonData) ,{
+        //   headers: {
+        //     "Content-Type": "application/json",
+        //   },
+        // })
+        // .then(
+        //   (res) =>{console.log(res.data);}
+        // )         
+      }      
     }
  
 
@@ -190,7 +218,7 @@ export default function NestedGrid() {
               
               <Grid container spacing={1}>
                 <Grid container item spacing={3}>
-                    <FirstFormRow setCompany={setCompany}/>
+                    <FirstFormRow setCompany={setCompany} regDate={regDate}/>
                 </Grid>
                 <Grid container item spacing={3}>
                     <SecondFormRow />

@@ -1,15 +1,35 @@
-import * as React from 'react';
+import { useEffect, useState } from 'react';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
+import axios from 'axios';
+
 
 export default function ComboBoxProduct({setProductId}) {
-   
+  
+  const [productList, setProductList] = useState([]);
+  
+  useEffect(()=> {
+
+    const event = async() => {
+      const jsonData = await axios.get("/process-service/products");
+      //console.log(jsonData.data);
+      let tempList = [];
+      jsonData.data.map( (v) =>{
+        tempList.push(v.productId);
+      });
+      setProductList(tempList);
+    }
+    
+    event(); 
+    
+  },[]);
+
   return (
     
       <Autocomplete
         disablePortal
         id="combo-box-demo"
-        options={top100Films}
+        options={productList}
         sx={{ width: 165, display: 'inline'}}
         renderInput={(params) => 
         <TextField {...params} label="상품정보" />}
