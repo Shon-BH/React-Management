@@ -5,6 +5,7 @@ import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
+import HeatingLogTable from '../tables/HeatingLogTable';
 
 const Drafts = () => {
     return (
@@ -58,16 +59,16 @@ export default function BasicTabs() {
   return (
     
     <Box sx={{ width: '100%' }}>
-        <h1>HI</h1>
+        <h1><SupervisorAccountIcon fontsize='large'/> 관리자 페이지</h1>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-          <Tab label="Item One" {...a11yProps(0)} />
+          <Tab label="회원 관리" {...a11yProps(0)} />
           <Tab label="Item Two" {...a11yProps(1)} />
           <Tab label="Item Three" {...a11yProps(2)} />
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
-        Item One
+        <HeatingLogTable/>
       </TabPanel>
       <TabPanel value={value} index={1}>
         Item Two
@@ -78,41 +79,3 @@ export default function BasicTabs() {
     </Box>
   );
 }
-
-// import React from 'react';
-// import HeatingLogTable from '../tables/HeatingLogTable';
-
-// import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
-// import { Button, TabPanel, Switch, Tab, Tabs } from '@mui/material';
-// import { Route } from 'react-router-dom';
-// import { Box } from '@mui/system';
-
-
-// const Drafts = () => {
-//     return (
-//         <div>
-//             <h1><SupervisorAccountIcon fontsize='large'/> 관리자 페이지</h1>
-//             <Button variant="contained" href='/admin/ClientList' size='small'>고객사 관리</Button>
-//             <Button variant="outlined" href='/admin/ProductInfo' size='small'>코일 정보</Button>
-            
-//             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-//                 <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-//                     <Tab label="Item One" {...a11yProps(0)} />
-//                     <Tab label="Item Two" {...a11yProps(1)} />
-//                     <Tab label="Item Three" {...a11yProps(2)} />
-//                 </Tabs>
-//             </Box>
-//             <TabPanel value={value} index={0}>
-//             Item One
-//             </TabPanel>
-//             <TabPanel value={value} index={1}>
-//             Item Two
-//             </TabPanel>
-//             <TabPanel value={value} index={2}>
-//             Item Three
-//             </TabPanel>
-//         </div>
-//     );
-// };
-
-// export default Drafts;
