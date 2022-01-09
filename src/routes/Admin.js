@@ -5,8 +5,11 @@ import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
+import NewMember from '../admin/NewMember';
 import MemberList from '../admin/MemberList';
+import NewClient from '../admin/NewClient';
 import ClientList from '../admin/ClientList';
+import NewProduct from '../admin/NewProduct';
 import ProductInfo from '../admin/ProductInfo';
 
 const Drafts = () => {
@@ -70,12 +73,15 @@ export default function BasicTabs() {
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
+        <NewMember/>
         <MemberList/>
       </TabPanel>
       <TabPanel value={value} index={1}>
+        <NewProduct /><br/>
         <ProductInfo/>
       </TabPanel>
       <TabPanel value={value} index={2}>
+        <NewClient /><br/>
         <ClientList/>
       </TabPanel>
     </Box>

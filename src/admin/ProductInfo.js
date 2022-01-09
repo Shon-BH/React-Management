@@ -21,6 +21,11 @@ import Switch from '@mui/material/Switch';
 import DeleteIcon from '@mui/icons-material/Delete';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import { visuallyHidden } from '@mui/utils';
+import Grid from '@mui/material/Grid';
+import { AppBar, TextField } from '@mui/material';
+import Button from '@restart/ui/esm/Button';
+import SearchIcon from '@mui/icons-material/Search';
+import RefreshIcon from '@mui/icons-material/Refresh';
 
 
 function createData(id1, id2, id3, id4, id5) {
@@ -30,13 +35,10 @@ function createData(id1, id2, id3, id4, id5) {
 }
 
 const rows = [
-  createData('A12345 ', '2021.12.24', '2021.12.25',  'B1234', 200),
-  createData('A12345 ', '2021.12.24', '2021.12.25', 'B1234', 200),
-  createData('A12345 ', '2021.12.24', '2021.12.25', 'B1234', 200),
-  createData('A12345 ', '2021.12.24', '2021.12.25', 'B1234', 200),
-  createData('A12345 ', '2021.12.24', '2021.12.25', 'B1234', 200),
-  createData('A12345 ', '2021.12.24', '2021.12.25', 'B1234', 200),
-  createData('A12345 ', '2021.12.24', '2021.12.25', 'B1234', 200),
+  createData('PB1256C', '16m', '18mm', '5mm','2022-01-08'),
+  createData('PB1654A', '20m', '10mm', '3mm','2022-01-08'),
+  createData('PB1589F', '15m', '20mm', '7mm','2022-01-08'),
+
 ];
 
 function descendingComparator(a, b, orderBy) {
@@ -74,31 +76,31 @@ const headCells = [
         id: 'id1',
         numeric: false,
         disablePadding: true,
-        label: '주문번호',
+        label: '코일 번호',
     },
     {
         id: 'id2',
         numeric: true,
         disablePadding: false,
-        label: '공정시작일',
+        label: '길이',
     },
     {
         id: 'id3',
         numeric: true,
         disablePadding: false,
-        label: '공정마감일',
+        label: '폭',
     },
     {
         id: 'id4',
         numeric: true,
         disablePadding: false,
-        label: '코일번호',
+        label: '두께',
     },
     {
         id: 'id5',
         numeric: true,
         disablePadding: false,
-        label: '계획수량',
+        label: '등록 일시',
     },
 ];
 
@@ -158,6 +160,11 @@ EnhancedTableHead.propTypes = {
   rowCount: PropTypes.number.isRequired,
 };
 
+
+
+
+
+
 const EnhancedTableToolbar = (props) => {
   const { numSelected } = props;
 
@@ -172,6 +179,7 @@ const EnhancedTableToolbar = (props) => {
         }),
       }}
     >
+        
       {numSelected > 0 ? (
         <Typography
           sx={{ flex: '1 1 100%' }}
@@ -188,8 +196,9 @@ const EnhancedTableToolbar = (props) => {
           id="tableTitle"
           component="div"
         >
-          Nutrition
+          코일 정보
         </Typography>
+        
       )}
 
       {numSelected > 0 ? (
@@ -279,6 +288,31 @@ export default function EnhancedTable() {
     <Box sx={{ width: '100%' }}>
       <Paper sx={{ width: '100%', mb: 2 }}>
         <EnhancedTableToolbar numSelected={selected.length} />
+        <AppBar
+        position="static"
+        color="default"
+        elevation={0}
+        sx={{ borderBottom: '1px solid rgba(0, 0, 0, 0.12)' }}
+      >
+        <Toolbar>
+          <Grid container spacing={2} alignItems="center">
+            <Grid item>
+              <SearchIcon color="inherit" sx={{ display: 'block' }} />
+            </Grid>
+            <Grid item xs>
+              <TextField
+                fullWidth
+                placeholder="코일번호로 검색할 수 있습니다."
+                InputProps={{
+                  disableUnderline: true,
+                  sx: { fontSize: 'default' },
+                }}
+                variant="standard"
+              />
+            </Grid>
+          </Grid>
+        </Toolbar>
+      </AppBar>
         <TableContainer>
           <Table
             sx={{ minWidth: 750 }}
@@ -330,9 +364,9 @@ export default function EnhancedTable() {
                         {row.id1}
                       </TableCell>
                         <TableCell align="right">{row.id2}</TableCell>
-                            <TableCell align="right">{row.id3}</TableCell>
-                            <TableCell align="right">{row.id4}</TableCell>
-                            <TableCell align="right">{row.id5}</TableCell>
+                        <TableCell align="right">{row.id3}</TableCell>
+                        <TableCell align="right">{row.id4}</TableCell>
+                        <TableCell align="right">{row.id5}</TableCell>
                     </TableRow>
                   );
                 })}

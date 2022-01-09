@@ -26,6 +26,7 @@ import { AppBar, TextField } from '@mui/material';
 import Button from '@restart/ui/esm/Button';
 import SearchIcon from '@mui/icons-material/Search';
 import RefreshIcon from '@mui/icons-material/Refresh';
+import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded';
 
 
 function createData(id1, id2, id3, id4, id5) {
@@ -35,9 +36,9 @@ function createData(id1, id2, id3, id4, id5) {
 }
 
 const rows = [
-  createData('준우제강', '손준우','programmor-son@google.com', '010-1111-1111', '2022-01-08'),
-  createData('병훈전자', '손병훈', 'SBH11@google.com', '010-2222-2222', '2022-01-08'),
-  createData('수민건설', '이수민', 'SMLee@google.com', '010-3333-3333', '2022-01-08'),
+  createData('손준우', 'programmor-son@google.com', 'junwoo32@', '2022-01-08'),
+  createData('손병훈', 'SBH11@google.com', 'mrson94@', '2022-01-08'),
+  createData('이수민', 'SMLee@google.com', 'fred12!', '2022-01-08'),
 
 ];
 
@@ -76,32 +77,26 @@ const headCells = [
         id: 'id1',
         numeric: false,
         disablePadding: true,
-        label: '회사명',
+        label: '이름',
     },
     {
         id: 'id2',
         numeric: true,
         disablePadding: false,
-        label: '담당자 이름',
+        label: '이메일 주소',
     },
     {
         id: 'id3',
         numeric: true,
         disablePadding: false,
-        label: '담당자 이메일',
+        label: '비밀번호',
     },
     {
         id: 'id4',
         numeric: true,
         disablePadding: false,
-        label: '담당자 번호',
+        label: '등록 신청 날짜',
     },
-    {
-      id: 'id5',
-      numeric: true,
-      disablePadding: false,
-      label: '등록 일시',
-  },
 ];
 
 function EnhancedTableHead(props) {
@@ -196,15 +191,15 @@ const EnhancedTableToolbar = (props) => {
           id="tableTitle"
           component="div"
         >
-          기존 회원
+          회원 등록 희망
         </Typography>
         
       )}
 
       {numSelected > 0 ? (
-        <Tooltip title="Delete">
+        <Tooltip title="Add">
           <IconButton>
-            <DeleteIcon />
+            <AddCircleOutlineRoundedIcon />
           </IconButton>
         </Tooltip>
       ) : (
@@ -366,7 +361,6 @@ export default function EnhancedTable() {
                         <TableCell align="right">{row.id2}</TableCell>
                             <TableCell align="right">{row.id3}</TableCell>
                             <TableCell align="right">{row.id4}</TableCell>
-                            <TableCell align="right">{row.id5}</TableCell>
                     </TableRow>
                   );
                 })}
