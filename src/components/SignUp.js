@@ -35,15 +35,16 @@ export default function SignUp() {
   const theme = createTheme();
   const [checked, setChecked] = React.useState(false);
   const [emailError, setEmailError] = React.useState('');
+  const [phoneError, setPhoneError] = React.useState('');
   const [passwordState, setPasswordState] = React.useState('');
   const [passwordError, setPasswordError] = React.useState('');
   const [nameError, setNameError] = React.useState('');
   const [registerError, setRegisterError] = React.useState('');
   const history = useHistory();
 
-  // const handleAgree = (event) => {
-  //   setChecked(event.target.checked);
-  // };
+  const handleAgree = (event) => {
+    setChecked(event.target.checked);
+  };
 
   // const onhandlePost = async (data) => {
   //   const { email, name, password } = data;
@@ -70,16 +71,22 @@ export default function SignUp() {
     
     const joinData = {
       email: data.get('email'),
+      phone: data.get('phone'),
       name: data.get('name'),
       password: data.get('password'),
       rePassword: data.get('rePassword'),
     };
-    const { name, email, password, rePassword } = joinData;
+    const { name, email, phone, password, rePassword } = joinData;
 
     // 이메일 유효성 체크
     const emailRegex = /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
     if (!emailRegex.test(email)) setEmailError('올바른 이메일 형식이 아닙니다.');
     else setEmailError('');
+
+    // 휴대전화 유효성 체크
+    const phoneRegex = /^(?:(010-\d{4})|(01[1|6|7|8|9]-\d{3,4}))-(\d{4})$/;
+    if (!phoneRegex.test(phone)) setPhoneError('올바른 휴대전화 번호 형식이 아닙니다.');
+    else setPhoneError('');
 
     // 비밀번호 유효성 체크
     const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/;
@@ -152,8 +159,9 @@ export default function SignUp() {
                   error={nameError !== '' || false}
                   autoFocus
                 />
+                <FormHelperTexts>{nameError}</FormHelperTexts>
               </Grid>
-              <FormHelperTexts>{nameError}</FormHelperTexts>
+              
               <Grid item xs={12}>
                 <TextField
                   required
@@ -165,8 +173,23 @@ export default function SignUp() {
                   autoComplete="email"
                   error={emailError !== '' || false}
                 />
+                <FormHelperTexts>{emailError}</FormHelperTexts>
               </Grid>
-              <FormHelperTexts>{emailError}</FormHelperTexts>
+              
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  autoFocus
+                  fullWidth
+                  id="phone"
+                  label="휴대전화 번호(010-XXXX-XXXX)"
+                  name="phone"
+                  autoComplete="phone"
+                  error={phoneError !== '' || false}
+                />
+                <FormHelperTexts>{phoneError}</FormHelperTexts>
+              </Grid>
+              
               <Grid item xs={12}>
                 <TextField
                   required
@@ -177,8 +200,9 @@ export default function SignUp() {
                   id="password"
                   error={passwordState !== '' || false}
                 />
+                <FormHelperTexts>{passwordState}</FormHelperTexts>
               </Grid>
-              <FormHelperTexts>{passwordState}</FormHelperTexts>
+              
               <Grid item xs={12}>
                   <TextField
                     required
@@ -189,11 +213,12 @@ export default function SignUp() {
                     label="비밀번호 재입력"
                     error={passwordError !== '' || false}
                   />
+                  <FormHelperTexts>{passwordError}</FormHelperTexts>
               </Grid>
-              <FormHelperTexts>{passwordError}</FormHelperTexts>
+              
               <Grid item xs={12}>
                 <FormControlLabel
-                  control={<Checkbox value="allowExtraEmails" color="primary" />}
+                  control={<Checkbox onChange={handleAgree} color="primary" />}
                   label="회원가입 약관에 동의합니다."
                 />
               </Grid>
