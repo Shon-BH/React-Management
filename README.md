@@ -11,3 +11,10 @@ DB 통계, 공정, 유저 3개로 나누었으며 각각의 DB는 독립적인 �
 대신 3개의 DB 데이터는 서로 동기화를 함으로써 데이터를 공유한다.
 
 React, Spring, JPA  활용 (각 조원 소속 내 사용하는 부서 기술 스택 참고)
+
+
+대시보드 JS 사용법
+ 
+- npm install @material-ui/core recharts
+
+- 주소창에 '/dashboard' 붙이기
