@@ -314,12 +314,12 @@ export default function EnhancedTable() {
                         scope="row"
                         padding="none"
                       >
-                        {row.heating_furnance_id}
+                        {row.heatingFurnanceId}
                       </TableCell>
-                      <TableCell align="right">{row.preheating_zone_temp}</TableCell>
-                      <TableCell align="right">{row.heating_zone_temp}</TableCell>
-                      <TableCell align="right">{row.soaking_zone_temp}</TableCell>
-                      <TableCell align="right">{row.heating_furnance_update}</TableCell>
+                      <TableCell align="right">{row.preheatingZoneTemp}</TableCell>
+                      <TableCell align="right">{row.heatingZoneTemp}</TableCell>
+                      <TableCell align="right">{row.soakingZoneTemp}</TableCell>
+                      <TableCell align="right">{row.heatingFurnanceUpdate}</TableCell>
                     </TableRow>
                   );
                 })}

@@ -5,70 +5,43 @@ import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Title from './Title';
-
-// Generate Order Data
-function createData(id, date, name, shipTo, paymentMethod, amount) {
-  return { id, date, name, shipTo, paymentMethod, amount };
-}
-
-const rows = [
-  createData(
-    0,
-    '16 Mar, 2019',
-    'Elvis Presley',
-    'Tupelo, MS',
-    'VISA ⠀•••• 3719',
-    312.44,
-  ),
-  createData(
-    1,
-    '16 Mar, 2019',
-    'Paul McCartney',
-    'London, UK',
-    'VISA ⠀•••• 2574',
-    866.99,
-  ),
-  createData(2, '16 Mar, 2019', 'Tom Scholz', 'Boston, MA', 'MC ⠀•••• 1253', 100.81),
-  createData(
-    3,
-    '16 Mar, 2019',
-    'Michael Jackson',
-    'Gary, IN',
-    'AMEX ⠀•••• 2000',
-    654.39,
-  ),
-  createData(
-    4,
-    '15 Mar, 2019',
-    'Bruce Springsteen',
-    'Long Branch, NJ',
-    'VISA ⠀•••• 5919',
-    212.79,
-  ),
-];
+import axios from 'axios';
 
 export default function Orders() {
+  const [rows ,setRows] = React.useState([]);
+
+  const statsLogFunc = async () => {
+    const jsonData = await axios.get("/stats-service/stats_log");
+    setRows(jsonData.data);
+  }  
+
+  React.useEffect(()=>{
+    statsLogFunc();
+  }, []);
+  
   return (
     <React.Fragment>
-      <Title>Recent Orders</Title>
+      <Title>통계</Title>
       <Table size="small">
         <TableHead>
           <TableRow>
-            <TableCell>Date</TableCell>
-            <TableCell>Name</TableCell>
-            <TableCell>Ship To</TableCell>
-            <TableCell>Payment Method</TableCell>
-            <TableCell align="right">Sale Amount</TableCell>
+            <TableCell>코일 번호</TableCell>
+            <TableCell>코일 두께</TableCell>
+            <TableCell>코일 넓이</TableCell>
+            <TableCell>코일 길이</TableCell>
+            <TableCell>공정 현황</TableCell>
+            <TableCell>공정완료 시간</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {rows.map((row) => (
             <TableRow key={row.id}>
-              <TableCell>{row.date}</TableCell>
-              <TableCell>{row.name}</TableCell>
-              <TableCell>{row.shipTo}</TableCell>
-              <TableCell>{row.paymentMethod}</TableCell>
-              <TableCell align="right">{`$${row.amount}`}</TableCell>
+              <TableCell>{row.statsId}</TableCell>
+              <TableCell>{row.thickness}</TableCell>
+              <TableCell>{row.width}</TableCell>
+              <TableCell>{row.length}</TableCell>
+              <TableCell>{row.statsStatus}</TableCell>
+              <TableCell> {row.statsUpdate}</TableCell>
             </TableRow>
           ))}
         </TableBody>
