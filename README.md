@@ -12,5 +12,7 @@ DB 통계, 공정, 유저 3개로 나누었으며 각각의 DB는 독립적인 �
 
 React, Spring, JPA  활용 (각 조원 소속 내 사용하는 부서 기술 스택 참고)
 
-- 대시보드
-npm install @material-ui/core recharts
+* 대시보드 
+- npm install @material-ui/core recharts
+
+- 주소창에 '/dashboard' 붙이기
