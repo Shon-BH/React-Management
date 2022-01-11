@@ -1,9 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
 import SignIn from "./components/SignIn";
 import SignUp from "./components/SignUp";
-import Dashboard from "./dashboard/Dashboard"
 import PersistentDrawerLeft from './PersistentDrawerLeft';
+import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
 
 function App() {
   return (
@@ -18,10 +16,6 @@ function App() {
             <SignUp/>
           </Route>
 
-          <Route path="/dashboard">
-            <Dashboard/>
-          </Route>
-          
           <Route path="/submenu/inbox">
             <PersistentDrawerLeft selectMenu={'inbox'}/>
           </Route>
