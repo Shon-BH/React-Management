@@ -23,23 +23,9 @@ import FilterListIcon from '@mui/icons-material/FilterList';
 import { visuallyHidden } from '@mui/utils';
 import Grid from '@mui/material/Grid';
 import { AppBar, TextField } from '@mui/material';
-import Button from '@restart/ui/esm/Button';
 import SearchIcon from '@mui/icons-material/Search';
-import RefreshIcon from '@mui/icons-material/Refresh';
+import axios from 'axios';
 
-
-function createData(id1, id2, id3, id4, id5) {
-    return {
-        id1, id2, id3, id4, id5
-    };
-}
-
-const rows = [
-  createData('준우제강', '손준우','programmor-son@google.com', '010-1111-1111', '2022-01-08'),
-  createData('병훈전자', '손병훈', 'SBH11@google.com', '010-2222-2222', '2022-01-08'),
-  createData('수민건설', '이수민', 'SMLee@google.com', '010-3333-3333', '2022-01-08'),
-
-];
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -73,31 +59,26 @@ function stableSort(array, comparator) {
 
 const headCells = [
   {
-        id: 'id1',
         numeric: false,
         disablePadding: true,
         label: '회사명',
     },
     {
-        id: 'id2',
         numeric: true,
         disablePadding: false,
         label: '담당자 이름',
     },
     {
-        id: 'id3',
         numeric: true,
         disablePadding: false,
         label: '담당자 이메일',
     },
     {
-        id: 'id4',
         numeric: true,
         disablePadding: false,
         label: '담당자 번호',
     },
     {
-      id: 'id5',
       numeric: true,
       disablePadding: false,
       label: '등록 일시',
@@ -159,11 +140,6 @@ EnhancedTableHead.propTypes = {
   orderBy: PropTypes.string.isRequired,
   rowCount: PropTypes.number.isRequired,
 };
-
-
-
-
-
 
 const EnhancedTableToolbar = (props) => {
   const { numSelected } = props;
@@ -229,6 +205,16 @@ export default function EnhancedTable() {
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [rows, setRows] = React.useState([]);
+
+  const AdminClientFunc = async () => {
+    const jsonData = await axios.get("/process-service/admin_client");
+    setRows(jsonData.data);
+  }  
+
+  React.useEffect(()=>{
+    AdminClientFunc();
+  },[]);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -361,12 +347,12 @@ export default function EnhancedTable() {
                         scope="row"
                         padding="none"
                       >
-                        {row.id1}
+                        {row.clientId}
                       </TableCell>
-                        <TableCell align="right">{row.id2}</TableCell>
-                            <TableCell align="right">{row.id3}</TableCell>
-                            <TableCell align="right">{row.id4}</TableCell>
-                            <TableCell align="right">{row.id5}</TableCell>
+                        <TableCell align="right">{row.clientName}</TableCell>
+                            <TableCell align="right">{row.clientEmail}</TableCell>
+                            <TableCell align="right">{row.clientNumber}</TableCell>
+                            <TableCell align="right">{row.clientUpdate}</TableCell>
                     </TableRow>
                   );
                 })}

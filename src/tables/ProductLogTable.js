@@ -55,37 +55,31 @@ function stableSort(array, comparator) {
 
 const headCells = [
   {
-        id: 'id1',
         numeric: false,
         disablePadding: true,
         label: '코일 번호',
     },
     {
-        id: 'id2',
         numeric: true,
         disablePadding: false,
         label: '코일 두께',
     },
     {
-        id: 'id3',
         numeric: true,
         disablePadding: false,
         label: '코일 넓이',
   },
     {
-        id: 'id4',
         numeric: true,
         disablePadding: false,
         label: '코일 길이',
   },
     {
-        id: 'id5',
         numeric: true,
         disablePadding: false,
         label: '공정 현황',
   },
     {
-        id: 'id6',
         numeric: true,
         disablePadding: false,
         label: '공정완료 시간',
@@ -326,13 +320,13 @@ export default function EnhancedTable() {
                         scope="row"
                         padding="none"
                       >
-                        {row.product_id}
+                        {row.productId}
                       </TableCell>
                         <TableCell align="right">{row.thickness}</TableCell>
                       <TableCell align="right">{row.width}</TableCell>
                       <TableCell align="right">{row.length}</TableCell>
-                      <TableCell align="right">{row.product_status}</TableCell>
-                      <TableCell align="right">{row.product_update}</TableCell>
+                      <TableCell align="right">{row.productStatus}</TableCell>
+                      <TableCell align="right">{row.productUpdate}</TableCell>
                     </TableRow>
                   );
                 })}

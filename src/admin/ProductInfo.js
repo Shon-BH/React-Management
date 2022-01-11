@@ -23,23 +23,9 @@ import FilterListIcon from '@mui/icons-material/FilterList';
 import { visuallyHidden } from '@mui/utils';
 import Grid from '@mui/material/Grid';
 import { AppBar, TextField } from '@mui/material';
-import Button from '@restart/ui/esm/Button';
 import SearchIcon from '@mui/icons-material/Search';
-import RefreshIcon from '@mui/icons-material/Refresh';
+import axios from 'axios';
 
-
-function createData(id1, id2, id3, id4, id5) {
-    return {
-        id1, id2, id3, id4, id5
-    };
-}
-
-const rows = [
-  createData('PB1256C', '16m', '18mm', '5mm','2022-01-08'),
-  createData('PB1654A', '20m', '10mm', '3mm','2022-01-08'),
-  createData('PB1589F', '15m', '20mm', '7mm','2022-01-08'),
-
-];
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -73,31 +59,26 @@ function stableSort(array, comparator) {
 
 const headCells = [
   {
-        id: 'id1',
         numeric: false,
         disablePadding: true,
         label: '코일 번호',
     },
     {
-        id: 'id2',
         numeric: true,
         disablePadding: false,
         label: '길이',
     },
     {
-        id: 'id3',
         numeric: true,
         disablePadding: false,
         label: '폭',
     },
     {
-        id: 'id4',
         numeric: true,
         disablePadding: false,
         label: '두께',
     },
     {
-        id: 'id5',
         numeric: true,
         disablePadding: false,
         label: '등록 일시',
@@ -159,11 +140,6 @@ EnhancedTableHead.propTypes = {
   orderBy: PropTypes.string.isRequired,
   rowCount: PropTypes.number.isRequired,
 };
-
-
-
-
-
 
 const EnhancedTableToolbar = (props) => {
   const { numSelected } = props;
@@ -229,6 +205,16 @@ export default function EnhancedTable() {
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [rows, setRows] = React.useState([]);
+
+  const AdminProductFunc = async () => {
+    const jsonData = await axios.get("/process-service/admin_product");
+    setRows(jsonData.data);
+  }  
+
+  React.useEffect(()=>{
+    AdminProductFunc();
+  },[]);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -361,12 +347,12 @@ export default function EnhancedTable() {
                         scope="row"
                         padding="none"
                       >
-                        {row.id1}
+                        {row.productId}
                       </TableCell>
-                        <TableCell align="right">{row.id2}</TableCell>
-                        <TableCell align="right">{row.id3}</TableCell>
-                        <TableCell align="right">{row.id4}</TableCell>
-                        <TableCell align="right">{row.id5}</TableCell>
+                        <TableCell align="right">{row.productLen}</TableCell>
+                        <TableCell align="right">{row.productWidth}</TableCell>
+                        <TableCell align="right">{row.productThick}</TableCell>
+                        <TableCell align="right">{row.productUpdate}</TableCell>
                     </TableRow>
                   );
                 })}
