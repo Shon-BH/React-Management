@@ -32,8 +32,7 @@ export default function Orders() {
   const data = anotherReaf();
 
   return (
-    <div>
-      
+    <div>      
       <LineChart width={500} height={280} data={data}>
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="name" interval="preserveEnd" />
