@@ -2,6 +2,7 @@ import SignIn from "./components/SignIn";
 import SignUp from "./components/SignUp";
 import PersistentDrawerLeft from './PersistentDrawerLeft';
 import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
+import Dashboard from "./dashboard/Dashboard";
 
 function App() {
   return (
@@ -14,6 +15,10 @@ function App() {
 
           <Route path="/signup">
             <SignUp/>
+          </Route>
+
+          <Route path="/dashboard">
+            <Dashboard/>
           </Route>
 
           <Route path="/submenu/inbox">
