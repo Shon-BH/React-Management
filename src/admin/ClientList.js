@@ -21,7 +21,11 @@ import Switch from '@mui/material/Switch';
 import DeleteIcon from '@mui/icons-material/Delete';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import { visuallyHidden } from '@mui/utils';
+import Grid from '@mui/material/Grid';
+import { AppBar, TextField } from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
 import axios from 'axios';
+
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -43,7 +47,6 @@ function getComparator(order, orderBy) {
 // need to support IE11, you can use Array.prototype.sort() directly
 function stableSort(array, comparator) {
   const stabilizedThis = array.map((el, index) => [el, index]);
-
   stabilizedThis.sort((a, b) => {
     const order = comparator(a[0], b[0]);
     if (order !== 0) {
@@ -56,35 +59,35 @@ function stableSort(array, comparator) {
 
 const headCells = [
   {
-    id: 'name',
-    numeric: false,
-    disablePadding: true,
-    label: '가열로 번호',
-  },
-  {
-    numeric: true,
-    disablePadding: false,
-    label: '예열대 온도',
-  },
-  {
-    numeric: true,
-    disablePadding: false,
-    label: '가열대 온도',
-  },
-  {
-    numeric: true,
-    disablePadding: false,
-    label: '균열대 온도',
-  },
-  {
-    numeric: true,
-    disablePadding: false,
-    label: '온도 측정시간',
+        numeric: false,
+        disablePadding: true,
+        label: '회사명',
+    },
+    {
+        numeric: true,
+        disablePadding: false,
+        label: '담당자 이름',
+    },
+    {
+        numeric: true,
+        disablePadding: false,
+        label: '담당자 이메일',
+    },
+    {
+        numeric: true,
+        disablePadding: false,
+        label: '담당자 번호',
+    },
+    {
+      numeric: true,
+      disablePadding: false,
+      label: '등록 일시',
   },
 ];
 
 function EnhancedTableHead(props) {
-  const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } = props;
+  const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } =
+    props;
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
   };
@@ -147,10 +150,12 @@ const EnhancedTableToolbar = (props) => {
         pl: { sm: 2 },
         pr: { xs: 1, sm: 1 },
         ...(numSelected > 0 && {
-          bgcolor: (theme) => alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity),
+          bgcolor: (theme) =>
+            alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity),
         }),
       }}
     >
+        
       {numSelected > 0 ? (
         <Typography
           sx={{ flex: '1 1 100%' }}
@@ -167,7 +172,9 @@ const EnhancedTableToolbar = (props) => {
           id="tableTitle"
           component="div"
         >
+          기존 회원
         </Typography>
+        
       )}
 
       {numSelected > 0 ? (
@@ -200,13 +207,13 @@ export default function EnhancedTable() {
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [rows, setRows] = React.useState([]);
 
-  const HeatingLogFunc = async () => {
-    const jsonData = await axios.get("/process-service/heating_furnance_temperature_log");
+  const AdminClientFunc = async () => {
+    const jsonData = await axios.get("/process-service/admin_client");
     setRows(jsonData.data);
   }  
 
   React.useEffect(()=>{
-    HeatingLogFunc();
+    AdminClientFunc();
   },[]);
 
   const handleRequestSort = (event, property) => {
@@ -260,12 +267,38 @@ export default function EnhancedTable() {
   const isSelected = (name) => selected.indexOf(name) !== -1;
 
   // Avoid a layout jump when reaching the last page with empty rows.
-  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
+  const emptyRows =
+    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
   return (
     <Box sx={{ width: '100%' }}>
       <Paper sx={{ width: '100%', mb: 2 }}>
         <EnhancedTableToolbar numSelected={selected.length} />
+        <AppBar
+        position="static"
+        color="default"
+        elevation={0}
+        sx={{ borderBottom: '1px solid rgba(0, 0, 0, 0.12)' }}
+      >
+        <Toolbar>
+          <Grid container spacing={2} alignItems="center">
+            <Grid item>
+              <SearchIcon color="inherit" sx={{ display: 'block' }} />
+            </Grid>
+            <Grid item xs>
+              <TextField
+                fullWidth
+                placeholder="이름, 이메일 주소로 검색할 수 있습니다."
+                InputProps={{
+                  disableUnderline: true,
+                  sx: { fontSize: 'default' },
+                }}
+                variant="standard"
+              />
+            </Grid>
+          </Grid>
+        </Toolbar>
+      </AppBar>
         <TableContainer>
           <Table
             sx={{ minWidth: 750 }}
@@ -314,12 +347,12 @@ export default function EnhancedTable() {
                         scope="row"
                         padding="none"
                       >
-                        {row.heatingFurnanceId}
+                        {row.clientId}
                       </TableCell>
-                      <TableCell align="right">{row.preheatingZoneTemp}</TableCell>
-                      <TableCell align="right">{row.heatingZoneTemp}</TableCell>
-                      <TableCell align="right">{row.soakingZoneTemp}</TableCell>
-                      <TableCell align="right">{row.heatingFurnanceUpdate}</TableCell>
+                        <TableCell align="right">{row.clientName}</TableCell>
+                            <TableCell align="right">{row.clientEmail}</TableCell>
+                            <TableCell align="right">{row.clientNumber}</TableCell>
+                            <TableCell align="right">{row.clientUpdate}</TableCell>
                     </TableRow>
                   );
                 })}

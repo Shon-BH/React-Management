@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
 import SignIn from "./components/SignIn";
 import SignUp from "./components/SignUp";
+import Dashboard from "./dashboard/Dashboard"
 import PersistentDrawerLeft from './PersistentDrawerLeft';
 
 function App() {
@@ -16,6 +17,10 @@ function App() {
           <Route path="/signup">
             <SignUp/>
           </Route>
+
+          <Route path="/dashboard">
+            <Dashboard/>
+          </Route>
           
           <Route path="/submenu/inbox">
             <PersistentDrawerLeft selectMenu={'inbox'}/>
@@ -25,6 +30,9 @@ function App() {
           </Route>
           <Route path="/submenu/starred">
             <PersistentDrawerLeft selectMenu={'starred'}/>              
+          </Route>
+          <Route path="/submenu/admin">
+            <PersistentDrawerLeft selectMenu={'admin'}/>              
           </Route>
           <Route path="/">
             <PersistentDrawerLeft selectMenu={'home'}/>

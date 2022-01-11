@@ -22,6 +22,7 @@ import { Link } from 'react-router-dom';
 import Inbox from './routes/Inbox';
 import Starred from './routes/Starred';
 import Drafts from './routes/Drafts';
+import Admin from './routes/Admin';
 
 const drawerWidth = 240;
 
@@ -100,6 +101,10 @@ export default function PersistentDrawerLeft({selectMenu}) {
       text: '가열로 데이터 모니터링',
       link: '/submenu/drafts'      
     },
+    {
+      text: '관리자',
+      link: '/submenu/admin'      
+    },
     
   ]
 
@@ -168,6 +173,8 @@ export default function PersistentDrawerLeft({selectMenu}) {
                     return <Starred/>
                   case 'drafts':
                     return <Drafts/>
+                  case 'admin':
+                    return <Admin />
                 default:
                   return <NestedGrid/>
                }               
