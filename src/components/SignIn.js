@@ -12,6 +12,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import axios from 'axios';
 
 function Copyright(props) {
   return (
@@ -30,8 +31,36 @@ const theme = createTheme();
 
 
 export default function SignIn() {
+
+  const onLogin = (email, password) => {
+    const data = {
+      email,
+      password,
+    };
+    axios.post('/login', data).then(response => {
+      console.log(response.data);
+      const { accessToken } = response.data;
+  
+      // API 요청하는 콜마다 헤더에 accessToken 담아 보내도록 설정
+      axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
+  
+      // accessToken을 localStorage, cookie 등에 저장하지 않는다!
+  
+    }).catch(error => {
+      // ... 에러 처리
+    });
+  }
+
   const handleSubmit = (event) => {
-    window.location.href = '/';
+    event.preventDefault();
+    
+     const data = new FormData(event.currentTarget);
+     const userId = data.get("email");
+     const password = data.get("password");
+
+    onLogin("sjw3957@gmail.com", "gotjr2828@");
+
+    //window.location.href = '/';
   };
 
   return (
@@ -53,6 +82,7 @@ export default function SignIn() {
             Sign in
           </Typography>
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+            
             <TextField
               margin="normal"
               required
@@ -78,14 +108,16 @@ export default function SignIn() {
               label="Remember me"
             />
             <Button
-              type="button"
-              onClick={handleSubmit}
+              type="submit"
+              //type="button"
+              //onClick={handleSubmit}
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
               Sign In
             </Button>
+            
             <Grid container>
               <Grid item xs>
                 <Link href="#" variant="body2">
