@@ -107,6 +107,5 @@ export default function NestedGrid() {
             <h1><FormatListBulletedIcon />상세정보</h1>
                 <OrderTable/>
         </Box>
-        
     );
 }
