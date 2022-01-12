@@ -22,6 +22,12 @@ import Inbox from './routes/Inbox';
 import Starred from './routes/Starred';
 import Drafts from './routes/Drafts';
 import Admin from './routes/Admin';
+import Temp from './routes/dashboards/Temp';
+import Stock from './routes/dashboards/Stock';
+import Product from './routes/dashboards/Product';
+import Dashboard from './routes/dashboards/Dashboard';
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import HorizonLine from './HorizontalLine';
 
 const drawerWidth = 240;
 
@@ -107,6 +113,25 @@ export default function PersistentDrawerLeft({selectMenu}) {
     
   ]
 
+  const dashMenuList = [
+    {
+      text:'전체 통계',
+      link: '/dashmenu/dashboard'      
+    },
+    {
+      text:'온도 통계',
+      link: '/dashmenu/temp'      
+    },
+    {
+      text: '코일 불량률 통계',
+      link: '/dashmenu/product'      
+    },
+    {
+      text: '수량 통계',
+      link: '/dashmenu/stock'      
+    }
+  ]
+
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
@@ -145,8 +170,7 @@ export default function PersistentDrawerLeft({selectMenu}) {
           </IconButton>
         </DrawerHeader>
         <Divider />
-        <List>
-                    
+        <List>       
           {subMenuList.map((obj, index) => (
               <ListItem button key={obj.text}>
                   <ListItemIcon>
@@ -157,8 +181,18 @@ export default function PersistentDrawerLeft({selectMenu}) {
                   </Link>
               </ListItem>
           ))}
-
+          <HorizonLine/>
         </List>
+            {dashMenuList.map((obj, index) => (
+              <ListItem button key={obj.text}>
+                  <ListItemIcon>
+                    <DashboardIcon/>
+                  </ListItemIcon>
+                  <Link to={obj.link}>
+                    <ListItemText primary={obj.text} />
+                  </Link>
+              </ListItem>
+          ))}
         <Divider />
       </Drawer>
       <Main open={open}>
@@ -174,9 +208,19 @@ export default function PersistentDrawerLeft({selectMenu}) {
                     return <Drafts/>
                   case 'admin':
                     return <Admin />
+                    
+                  case 'dashboard':
+                    return <Dashboard />
+                  case 'temp':
+                    return <Temp />
+                  case 'stock':
+                    return <Stock />
+                  case 'product':
+                    return <Product />      
                 default:
                   return <NestedGrid/>
-               }               
+               }
+                   
              })()
            }
       </Main>
