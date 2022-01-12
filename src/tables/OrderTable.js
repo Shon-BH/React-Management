@@ -54,60 +54,46 @@ function stableSort(array, comparator) {
 }
 
 const headCells = [
+  {    
+    numeric: false,
+    disablePadding: true,
+    label: '주문번호',
+  },
   {
-        id: 'id1',        
-        umeric: false,
-        disablePadding: true,
-        label: '주문번호',
-    },
-    {
-        id: 'id2',
-        numeric: true,
-        disablePadding: false,
-        label: '코일번호',
-    },
-    {
-        id: 'id3',
-        numeric: true,
-        disablePadding: false,
-        label: '공정시작일',
+    numeric: true,
+    disablePadding: false,
+    label: '코일번호',
   },
-    {
-        id: 'id4',
-        numeric: true,
-        disablePadding: false,
-        label: '공정마감일',
+  {    
+    numeric: true,
+    disablePadding: false,
+    label: '요청회사',
   },
-    {
-        id: 'id5',
-        numeric: true,
-        disablePadding: false,
-        label: '요청회사',
+  {    
+    numeric: true,
+    disablePadding: false,
+    label: '담당자',
   },
-    {
-        id: 'id6',
-        numeric: true,
-        disablePadding: false,
-        label: '담당자',
+  {
+    numeric: true,
+    disablePadding: false,
+    label: '공정시작일',
   },
-    {
-        id: 'id7',
-        numeric: true,
-        disablePadding: false,
-        label: '계획수량',
+  {
+    numeric: true,
+    disablePadding: false,
+    label: '공정마감일',
   },
-    {
-        id: 'id8',
-        numeric: true,
-        disablePadding: false,
-        label: '현재고',
+  {
+    numeric: true,
+    disablePadding: false,
+    label: '계획수량',
   },
-    {
-        id: 'id9',
-        numeric: true,
-        disablePadding: false,
-        label: '주문상태',
-    },
+  {
+    numeric: true,
+    disablePadding: false,
+    label: '주문상태',
+  },
 ];
 
 
@@ -222,7 +208,6 @@ EnhancedTableToolbar.propTypes = {
   numSelected: PropTypes.number.isRequired,
 };
 
-
 export default function EnhancedTable() {
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');
@@ -235,7 +220,6 @@ export default function EnhancedTable() {
   const ordersFunc = async () => {
     const jsonData = await axios.get("/process-service/orders");
     setRows(jsonData.data);
-    //console.log(jsonData.data);
   }  
 
   React.useEffect(()=>{
@@ -347,15 +331,14 @@ export default function EnhancedTable() {
                         scope="row"
                         padding="none"
                       >
-                        {row.order_id}
+                        {row.orderId}
                       </TableCell>
-                       <TableCell align="right">{row.product_id}</TableCell>
-                      <TableCell align="right">{row.process_start}</TableCell>
-                      <TableCell align="right">{row.process_end}</TableCell>
-                      <TableCell align="right">{row.id5}</TableCell>
-                      <TableCell align="right">{row.user_id}</TableCell>
-                      <TableCell align="right">{row.stock_plan}</TableCell>
-                      <TableCell align="right">{row.id8}</TableCell>
+                      <TableCell align="right">{row.productId}</TableCell>
+                      <TableCell align="right">{row.companyId}</TableCell>
+                      <TableCell align="right">{row.userId}</TableCell>
+                      <TableCell align="right">{row.processStart}</TableCell>
+                      <TableCell align="right">{row.processEnd}</TableCell>
+                      <TableCell align="right">{row.stockPlan}</TableCell>
                       <TableCell align="right">{row.status}</TableCell>
                     </TableRow>
                   );

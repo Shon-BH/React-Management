@@ -11,7 +11,7 @@ import DatePicker from '@mui/lab/DatePicker';
 
 import HorizonLine from './HorizontalLine';
 
-import Table5 from './tables/Table5';
+import OrderTable from './tables/OrderTable';
 
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 
@@ -105,7 +105,7 @@ export default function NestedGrid() {
             </Grid>
 
             <h1><FormatListBulletedIcon />상세정보</h1>
-                <Table5 />
+                <OrderTable/>
         </Box>
         
     );

@@ -56,7 +56,6 @@ function stableSort(array, comparator) {
 
 const headCells = [
   {
-    id: 'name',
     numeric: false,
     disablePadding: true,
     label: '가열로 번호',
