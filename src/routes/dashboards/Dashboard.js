@@ -2,8 +2,12 @@ import * as React from 'react';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
-import Chart from '../../graphs/Chart';
-import Tables from '../../tables/TempTable';
+import TempChart1 from '../../graphs/TempChart1';
+import TempChart2 from '../../graphs/TempChart2';
+import TempChart3 from '../../graphs/TempChart3';
+import TempChart4 from '../../graphs/TempChart4';
+import ProductChart from '../../graphs/ProductChart';
+import StockChart from '../../graphs/StockChart';
 
 const Dashboard = () => {
     return (
@@ -20,7 +24,7 @@ const Dashboard = () => {
                     height: 300,
                   }}
                 >
-                  <Chart />
+                  <TempChart1 />
                 </Paper>
               </Grid>
               {/* Chart2 */}
@@ -33,7 +37,7 @@ const Dashboard = () => {
                     height: 300,
                   }}
                 >
-                  <Chart />
+                  <TempChart2 />
                 </Paper>
               </Grid>
               {/* Chart3 */}
@@ -46,7 +50,7 @@ const Dashboard = () => {
                     height: 300,
                   }}
                 >
-                  <Chart />
+                  <TempChart3 />
                 </Paper>
               </Grid>
               {/* Chart4 */}
@@ -59,13 +63,33 @@ const Dashboard = () => {
                     height: 300,
                   }}
                 >
-                  <Chart />
+                  <TempChart4 />
                 </Paper>
               </Grid>
-              {/* Tables */}
-              <Grid item xs={12}>
-                <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-                  <Tables />
+              {/* ProductChart */}
+              <Grid item xs={15} md={6} lg={6}>
+                <Paper
+                  sx={{
+                    p: 2,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    height: 300,
+                  }}
+                >
+                  <ProductChart />
+                </Paper>
+              </Grid>
+              {/* StockChart */}
+              <Grid item xs={15} md={6} lg={6}>
+                <Paper
+                  sx={{
+                    p: 2,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    height: 300,
+                  }}
+                >
+                  <StockChart />
                 </Paper>
               </Grid>
             </Grid>
