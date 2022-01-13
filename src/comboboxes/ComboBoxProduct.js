@@ -4,25 +4,25 @@ import Autocomplete from '@mui/material/Autocomplete';
 import axios from 'axios';
 
 
-export default function ComboBoxProduct({setProductId}) {
+export default function ComboBoxProduct({setProductId, productList}) {
   
-  const [productList, setProductList] = useState([]);
+  // const [productList, setProductList] = useState([]);
   
-  useEffect(()=> {
+  // useEffect(()=> {
 
-    const event = async() => {
-      const jsonData = await axios.get("/process-service/products");
-      //console.log(jsonData.data);
-      let tempList = [];
-      jsonData.data.map( (v) =>{
-        tempList.push(v.productId);
-      });
-      setProductList(tempList);
-    }
+  //   const event = async() => {
+  //     const jsonData = await axios.get("/process-service/products");
+  //     //console.log(jsonData.data);
+  //     let tempList = [];
+  //     jsonData.data.map( (v) =>{
+  //       tempList.push(v.productId);
+  //     });
+  //     setProductList(tempList);
+  //   }
     
-    event(); 
+  //   event(); 
     
-  },[]);
+  // },[]);
 
   return (
     

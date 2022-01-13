@@ -4,28 +4,29 @@ import Autocomplete from '@mui/material/Autocomplete';
 import axios from 'axios';
 
 
-export default function ComboboxCompany({setCompany}) {
+export default function ComboboxCompany({setCompany, companyList}) {
   
-  const [companyList, setCompanyList] = useState([]);
+  //const [companyList, setCompanyList] = useState([]);
 
-  useEffect(()=> {
 
-    const event = async() => {
-      const jsonData = await axios.get("/process-service/companies");
-      //console.log(jsonData.data);
-      let tempList = [];
-      jsonData.data.map( (v) =>{
-        tempList.push({
-          label : v.name,
-          companyId : v.companyId,
-        });
-      });
-      setCompanyList(tempList);
-    }
+  // useEffect(()=> {
+
+  //   const event = async() => {
+  //     const jsonData = await axios.get("/process-service/companies");
+  //     //console.log(jsonData.data);
+  //     let tempList = [];
+  //     jsonData.data.map( (v) =>{
+  //       tempList.push({
+  //         label : v.name,
+  //         companyId : v.companyId,
+  //       });
+  //     });
+  //     setCompanyList(tempList);
+  //   }
     
-    event(); 
+  //   event(); 
     
-  },[]);
+  // },[]);
 
   return (
     <Autocomplete

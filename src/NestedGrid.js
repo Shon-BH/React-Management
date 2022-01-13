@@ -44,11 +44,11 @@ function leadingZeros(n, digits) {
   return zero + n;
 }
 
-function FirstFormRow({setCompany, regDate}) {
+function FirstFormRow({setCompany, regDate, companyList}) {
   return (
     <React.Fragment>
       <Grid item xs={2}>
-          <Item><ComboBoxCompany setCompany={setCompany}/></Item>
+          <Item><ComboBoxCompany setCompany={setCompany} companyList={companyList}/></Item>
         </Grid>
           
         <Grid item xs={2}>
@@ -116,10 +116,10 @@ function SecondFormRow() {
     );
   }
 
-  function ThirdFormRow({setProcessStart, setProcessEnd, setProductId, setStockPlan}) {
+  function ThirdFormRow({setProcessStart, setProcessEnd, setProductId, setStockPlan, productList}) {
     return (
       <React.Fragment>
-        
+          
           <Grid item xs={2}>
             <Item><BasicDatePicker setDate={setProcessStart}/></Item>
           </Grid>
@@ -127,7 +127,7 @@ function SecondFormRow() {
             <Item><BasicDatePicker setDate={setProcessEnd}/></Item>
           </Grid>
           <Grid item xs={2}>
-            <Item><ComboBoxProduct setProductId={setProductId}/></Item>
+            <Item><ComboBoxProduct setProductId={setProductId} productList={productList} /></Item>
           </Grid>
           <Grid item xs={2}>
             <Item>
@@ -169,19 +169,34 @@ export default function NestedGrid() {
    
     const [stockPlan, setStockPlan] = React.useState(0);
     const [productList, setProductList] = React.useState([]);
+    const [companyList, setCompanyList] = React.useState([]);
 
     const ProductAPI = async() => {
       const jsonData = await axios.get("/process-service/products");
       //console.log(jsonData.data);
       let tempList = [];
-      jsonData.data.map( (v) =>{
-        tempList.push(v);
+      jsonData.data.map( (v) => {
+        tempList.push(v.productId);
       });
       setProductList(tempList);
     }
 
+    const CompanyAPI = async() => {
+      const jsonData = await axios.get("/process-service/companies");
+      //console.log(jsonData.data);
+      let tempList = [];
+      jsonData.data.map( (v) =>{
+        tempList.push({
+          label : v.name,
+          companyId : v.companyId,
+        });
+      });
+      setCompanyList(tempList);
+    }
+
     React.useEffect(()=> {
         ProductAPI();
+        CompanyAPI();
     },[]);
     const f1 = () => {
 
@@ -218,7 +233,7 @@ export default function NestedGrid() {
               
               <Grid container spacing={1}>
                 <Grid container item spacing={3}>
-                    <FirstFormRow setCompany={setCompany} regDate={regDate}/>
+                    <FirstFormRow setCompany={setCompany} regDate={regDate} companyList={companyList} />
                 </Grid>
                 <Grid container item spacing={3}>
                     <SecondFormRow />
@@ -231,7 +246,7 @@ export default function NestedGrid() {
               <Grid container spacing={1}>
                 <h1><WebAssetIcon />상세정보</h1>
                 <Grid container item spacing={3}>
-                    <ThirdFormRow setProcessStart={setProcessStart} setProcessEnd={setProcessEnd} setProductId={setProductId} setStockPlan={setStockPlan}/>
+                    <ThirdFormRow setProcessStart={setProcessStart} setProcessEnd={setProcessEnd} setProductId={setProductId} setStockPlan={setStockPlan} productList={productList} />
                 </Grid>
                 <HorizonLine />
               </Grid>
