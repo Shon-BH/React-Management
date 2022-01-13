@@ -1,5 +1,6 @@
 import * as React from 'react';
 import Container from '@mui/material/Container';
+import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import TempChart1 from '../../graphs/TempChart1';
@@ -11,7 +12,8 @@ import StockChart from '../../graphs/StockChart';
 
 const Dashboard = () => {
     return (
-        <div>
+      <div>
+        <h1><FormatListBulletedIcon />전체 통계</h1>
             <Container maxWidth="lg" sx={{ mt: 6, mb: 6 }}>
             <Grid container spacing={3}>
               {/* Chart1 */}

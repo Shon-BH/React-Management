@@ -10,7 +10,7 @@ export default function Orders() {
   const [rows ,setRows] = React.useState([]);
 
   const statsLogFunc = async () => {
-    const jsonData = await axios.get("/stats-service/stats_log");
+    const jsonData = await axios.get("/stats-service/stock_stats_log");
     setRows(jsonData.data);
   }  
 
@@ -24,22 +24,20 @@ export default function Orders() {
         <TableHead>
           <TableRow>
             <TableCell>코일 번호</TableCell>
-            <TableCell>코일 두께</TableCell>
-            <TableCell>코일 넓이</TableCell>
-            <TableCell>코일 길이</TableCell>
+            <TableCell>계획 수량</TableCell>
+            <TableCell>재고</TableCell>
+            <TableCell>생산 수량</TableCell>
             <TableCell>공정 현황</TableCell>
-            <TableCell>공정완료 시간</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {rows.map((row) => (
             <TableRow key={row.id}>
-              <TableCell>{row.statsId}</TableCell>
-              <TableCell>{row.thickness}</TableCell>
-              <TableCell>{row.width}</TableCell>
-              <TableCell>{row.length}</TableCell>
-              <TableCell>{row.statsStatus}</TableCell>
-              <TableCell> {row.statsUpdate}</TableCell>
+              <TableCell>{row.productId}</TableCell>
+              <TableCell>{row.stockPlan}</TableCell>
+              <TableCell>{row.stock}</TableCell>
+              <TableCell>{row.makingStock}</TableCell>
+              <TableCell>{row.status}</TableCell>
             </TableRow>
           ))}
         </TableBody>
