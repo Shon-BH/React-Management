@@ -9,7 +9,7 @@ import StockTable from '../../tables/StockTable';
 const Stock = () => {
     return (
         <div>
-            <h1><FormatListBulletedIcon />수량</h1>
+            <h1><FormatListBulletedIcon />주문 수량-재고 비교</h1>
 
             <Container maxWidth="lg" sx={{ mt: 6, mb: 6 }}>
             <Grid container spacing={3}>

@@ -9,7 +9,7 @@ import ProducTable from '../../tables/ProductTable';
 const Product = () => {
     return (
         <div>
-            <h1><FormatListBulletedIcon />코일</h1>
+            <h1><FormatListBulletedIcon />코일 불량률</h1>
             
             <Container maxWidth="lg" sx={{ mt: 6, mb: 6 }}>
             <Grid container spacing={3}>
@@ -25,7 +25,7 @@ const Product = () => {
                         <ProductChart />
                     </Paper>
                 </Grid>
-                
+                    
                 <Grid item xs={12}>
                     <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
                         <ProducTable />

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Legend } from 'recharts';
 import axios from 'axios';
 
-export default function Orders() {
+export default function TempChart1() {
   const [rows ,setRows] = React.useState([]);
 
   const statsLogFunc = async () => {

@@ -12,7 +12,7 @@ import TempTable from '../../tables/TempTable';
 const Temp = () => {
     return (
         <div>
-            <h1><FormatListBulletedIcon />온도</h1>
+            <h1><FormatListBulletedIcon />온도 통계</h1>
             
             <Container maxWidth="lg" sx={{ mt: 6, mb: 6 }}>
             <Grid container spacing={3}>

@@ -20,7 +20,6 @@ export default function Orders() {
   
   return (
     <React.Fragment>
-      <h1>통계</h1>
       <Table size="small">
         <TableHead>
           <TableRow>

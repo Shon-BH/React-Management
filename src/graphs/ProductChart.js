@@ -1,8 +1,23 @@
-import * as React from 'react';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Legend } from 'recharts';
+import React from 'react';
+import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
 import axios from 'axios';
 
-export default function Orders() {
+const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#87ff42'];
+
+const RADIAN = Math.PI / 180;
+const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index }) => {
+  const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
+  const x = cx + radius * Math.cos(-midAngle * RADIAN);
+  const y = cy + radius * Math.sin(-midAngle * RADIAN);
+
+  return (
+    <text x={x} y={y} fill="white" textAnchor={x > cx ? 'start' : 'end'} dominantBaseline="central">
+      {`${(percent * 100).toFixed(0)}%`}
+    </text>
+  );
+};
+
+export default function ProductChart() {
   const [rows ,setRows] = React.useState([]);
 
   const statsLogFunc = async () => {
@@ -20,9 +35,7 @@ export default function Orders() {
     rows.map((row) => (
       array.push({
         name: row.statsId,
-        uv: row.thickness,
-        pv: row.length,
-        amt: 2400,
+        value: row.thickness,
       })
     ));
 
@@ -32,15 +45,23 @@ export default function Orders() {
   const data = anotherReaf();
 
   return (
-    <div>      
-      <LineChart width={500} height={280} data={data}>
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" interval="preserveEnd" />
-        <YAxis interval="preserveEnd" />
-        <Legend />
-        <Line type="monotone" dataKey="pv" stroke="#8884d8" activeDot={{ r: 8 }} />
-        <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
-      </LineChart>
-    </div>
+    <ResponsiveContainer width="100%" height="100%">
+      <PieChart width={600} height={600}>
+        <Pie
+          data={data}
+          cx="50%"
+          cy="50%"
+          labelLine={false}
+          label={renderCustomizedLabel}
+          outerRadius={125}
+          fill="#8884d8"
+          dataKey="value"
+        >
+          {data.map((entry, index) => (
+            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+          ))}
+        </Pie>
+      </PieChart>
+    </ResponsiveContainer>
   );
 }
