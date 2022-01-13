@@ -7,7 +7,7 @@ import TempChart1 from '../../graphs/TempChart1';
 import TempChart2 from '../../graphs/TempChart2';
 import TempChart3 from '../../graphs/TempChart3';
 import TempChart4 from '../../graphs/TempChart4';
-import TempTable from '../../tables/TempTable';
+import TempTableTest from '../../tables/TempTable';
 
 const Temp = () => {
     return (
@@ -17,7 +17,7 @@ const Temp = () => {
             <Container maxWidth="lg" sx={{ mt: 6, mb: 6 }}>
             <Grid container spacing={3}>
               {/* Chart1 */}
-              <Grid item xs={15} md={6} lg={6}>
+            <Grid item xs={15} md={6} lg={6}>
                 <Paper
                   sx={{
                     p: 2,
@@ -71,7 +71,7 @@ const Temp = () => {
                     
                 <Grid item xs={12}>
                     <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-                        <TempTable />
+                        <TempTableTest />
                     </Paper>
                 </Grid>
             </Grid>
