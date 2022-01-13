@@ -13,6 +13,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios';
+import { useHistory } from 'react-router-dom';
 
 function Copyright(props) {
   return (
@@ -32,12 +33,17 @@ const theme = createTheme();
 
 export default function SignIn() {
 
-  const onLogin = (email, password) => {
+  const history = useHistory();
+
+  const onLogin = (userId, password) => {
     const data = {
-      email,
+      userId,
       password,
     };
-    axios.post('/login', data).then(response => {
+
+    axios.post('/user-service/login', data)
+      .then(response => {
+      alert("login success");
       console.log(response.data);
       const { accessToken } = response.data;
   
@@ -45,9 +51,10 @@ export default function SignIn() {
       axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
   
       // accessToken을 localStorage, cookie 등에 저장하지 않는다!
-  
+      history.push("/");
     }).catch(error => {
       // ... 에러 처리
+      alert("error");      
     });
   }
 
@@ -58,7 +65,7 @@ export default function SignIn() {
      const userId = data.get("email");
      const password = data.get("password");
 
-    onLogin("sjw3957@gmail.com", "gotjr2828@");
+    onLogin(userId, password);
 
     //window.location.href = '/';
   };
