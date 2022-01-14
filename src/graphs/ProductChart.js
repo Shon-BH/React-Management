@@ -78,7 +78,16 @@ export default function ProductChart() {
           fill="#101012"
           dataKey="value"
         >
-          <LabelList dataKey="name" fill="#101012" position="outside" angle="0"  />
+          <LabelList 
+            dataKey="name"
+            fill="#101012"
+            position="outside"
+            angle="0"
+            style={{
+              fontSize: '1.2rem',
+              fontWeight: 'bold' 
+            }}
+          />
           {data.map((entry, index) => (
             <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
           ))}

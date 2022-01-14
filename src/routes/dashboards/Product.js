@@ -19,7 +19,7 @@ const Product = () => {
                             p: 2,
                             display: 'flex',
                             flexDirection: 'column',
-                            height: 330,
+                            height: 340,
                         }}
                     >
                         <ProductChart />

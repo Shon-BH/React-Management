@@ -27,7 +27,14 @@ const Temp = () => {
                     height: 330,
                   }}
                 >
-                  <Typography gutterBottom variant="subtitle1" component="div">
+                  <Typography
+                    gutterBottom variant="subtitle1"
+                    component="div"
+                    style={{
+                      fontSize: '1rem',
+                      fontWeight: 'bold' 
+                    }}
+                  >
                     가열로 hotRolling1
                   </Typography>
                   <TempChart1 />
@@ -43,7 +50,14 @@ const Temp = () => {
                     height: 330,
                   }}
                 >
-                  <Typography gutterBottom variant="subtitle1" component="div">
+                  <Typography
+                    gutterBottom variant="subtitle1"
+                    component="div"
+                    style={{
+                      fontSize: '1rem',
+                      fontWeight: 'bold' 
+                    }}
+                  >
                     가열로 hotRolling2
                   </Typography>
                   <TempChart2 />
@@ -59,7 +73,14 @@ const Temp = () => {
                     height: 330,
                   }}
                 >
-                  <Typography gutterBottom variant="subtitle1" component="div">
+                  <Typography
+                    gutterBottom variant="subtitle1"
+                    component="div"
+                    style={{
+                      fontSize: '1rem',
+                      fontWeight: 'bold' 
+                    }}
+                  >
                     가열로 hotRolling3
                   </Typography>
                   <TempChart3 />
@@ -75,7 +96,14 @@ const Temp = () => {
                     height: 330,
                   }}
                 >
-                  <Typography gutterBottom variant="subtitle1" component="div">
+                  <Typography
+                    gutterBottom variant="subtitle1"
+                    component="div"
+                    style={{
+                      fontSize: '1rem',
+                      fontWeight: 'bold' 
+                    }}
+                  >
                     가열로 hotRolling4
                   </Typography>
                   <TempChart4 />

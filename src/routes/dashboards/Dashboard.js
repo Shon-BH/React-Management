@@ -27,7 +27,14 @@ const Dashboard = () => {
                     height: 330
                   }}
                 >
-                  <Typography gutterBottom variant="subtitle1" component="div">
+                  <Typography
+                    gutterBottom variant="subtitle1"
+                    component="div"
+                    style={{
+                      fontSize: '1rem',
+                      fontWeight: 'bold' 
+                    }}
+                  >
                     가열로 hotRolling1
                   </Typography>
                   <TempChart1 />
@@ -43,7 +50,14 @@ const Dashboard = () => {
                     height: 330,
                   }}
                 >
-                  <Typography gutterBottom variant="subtitle1" component="div">
+                  <Typography
+                    gutterBottom variant="subtitle1"
+                    component="div"
+                    style={{
+                      fontSize: '1rem',
+                      fontWeight: 'bold' 
+                    }}
+                  >
                     가열로 hotRolling2
                   </Typography>
                   <TempChart2 />
@@ -59,7 +73,14 @@ const Dashboard = () => {
                     height: 330,
                   }}
                 >
-                  <Typography gutterBottom variant="subtitle1" component="div">
+                  <Typography
+                    gutterBottom variant="subtitle1"
+                    component="div"
+                    style={{
+                      fontSize: '1rem',
+                      fontWeight: 'bold' 
+                    }}
+                  >
                     가열로 hotRolling3
                   </Typography>
                   <TempChart3 />
@@ -75,7 +96,14 @@ const Dashboard = () => {
                     height: 330,
                   }}
                 >
-                  <Typography gutterBottom variant="subtitle1" component="div">
+                  <Typography
+                    gutterBottom variant="subtitle1"
+                    component="div"
+                    style={{
+                      fontSize: '1rem',
+                      fontWeight: 'bold' 
+                    }}
+                  >
                     가열로 hotRolling4
                   </Typography>
                   <TempChart4 />
@@ -88,10 +116,17 @@ const Dashboard = () => {
                     p: 2,
                     display: 'flex',
                     flexDirection: 'column',
-                    height: 330,
+                    height: 340,
                   }}
                 >
-                  <Typography gutterBottom variant="subtitle1" component="div">
+                  <Typography
+                    gutterBottom variant="subtitle1"
+                    component="div"
+                    style={{
+                      fontSize: '1rem',
+                      fontWeight: 'bold' 
+                    }}
+                  >
                     코일 불량률
                   </Typography>
                   <ProductChart />
@@ -104,10 +139,17 @@ const Dashboard = () => {
                     p: 2,
                     display: 'flex',
                     flexDirection: 'column',
-                    height: 300,
+                    height: 340,
                   }}
                 >
-                  <Typography gutterBottom variant="subtitle1" component="div">
+                  <Typography
+                    gutterBottom variant="subtitle1"
+                    component="div"
+                    style={{
+                      fontSize: '1rem',
+                      fontWeight: 'bold' 
+                    }}
+                  >
                     수량-재고
                   </Typography>
                   <StockChart />
