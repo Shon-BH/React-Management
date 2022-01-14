@@ -1,5 +1,5 @@
 import React from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Label } from 'recharts';
 import axios from 'axios';
 
 export default function StockChart() {
@@ -44,8 +44,10 @@ export default function StockChart() {
         }}
       >
         <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" />
-        <YAxis />
+        <XAxis dataKey="name" >
+          <Label value="코일 번호" offset={-8} position="insideBottomRight" />
+        </XAxis>
+        <YAxis label={{ value: '수량', angle: -90, offset: 5, position: 'insideLeft' }} />
         <Tooltip />
         <Legend />
         <Bar dataKey="재고" stackId="a" fill="#82ca9d" />

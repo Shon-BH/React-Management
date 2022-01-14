@@ -9,12 +9,13 @@ import TempChart3 from '../../graphs/TempChart3';
 import TempChart4 from '../../graphs/TempChart4';
 import ProductChart from '../../graphs/ProductChart';
 import StockChart from '../../graphs/StockChart';
+import { Typography } from '@mui/material';
 
 const Dashboard = () => {
     return (
       <div>
         <h1><FormatListBulletedIcon />전체 통계</h1>
-            <Container maxWidth="lg" sx={{ mt: 6, mb: 6 }}>
+            <Container maxWidth="lg" sx={{ mt: 8, mb: 8 }}>
             <Grid container spacing={3}>
               {/* Chart1 */}
               <Grid item xs={15} md={6} lg={6}>
@@ -23,9 +24,12 @@ const Dashboard = () => {
                     p: 2,
                     display: 'flex',
                     flexDirection: 'column',
-                    height: 300,
+                    height: 330
                   }}
                 >
+                  <Typography gutterBottom variant="subtitle1" component="div">
+                    가열로 hotRolling1
+                  </Typography>
                   <TempChart1 />
                 </Paper>
               </Grid>
@@ -36,9 +40,12 @@ const Dashboard = () => {
                     p: 2,
                     display: 'flex',
                     flexDirection: 'column',
-                    height: 300,
+                    height: 330,
                   }}
                 >
+                  <Typography gutterBottom variant="subtitle1" component="div">
+                    가열로 hotRolling2
+                  </Typography>
                   <TempChart2 />
                 </Paper>
               </Grid>
@@ -49,9 +56,12 @@ const Dashboard = () => {
                     p: 2,
                     display: 'flex',
                     flexDirection: 'column',
-                    height: 300,
+                    height: 330,
                   }}
                 >
+                  <Typography gutterBottom variant="subtitle1" component="div">
+                    가열로 hotRolling3
+                  </Typography>
                   <TempChart3 />
                 </Paper>
               </Grid>
@@ -62,9 +72,12 @@ const Dashboard = () => {
                     p: 2,
                     display: 'flex',
                     flexDirection: 'column',
-                    height: 300,
+                    height: 330,
                   }}
                 >
+                  <Typography gutterBottom variant="subtitle1" component="div">
+                    가열로 hotRolling4
+                  </Typography>
                   <TempChart4 />
                 </Paper>
               </Grid>
@@ -75,9 +88,12 @@ const Dashboard = () => {
                     p: 2,
                     display: 'flex',
                     flexDirection: 'column',
-                    height: 300,
+                    height: 330,
                   }}
                 >
+                  <Typography gutterBottom variant="subtitle1" component="div">
+                    코일 불량률
+                  </Typography>
                   <ProductChart />
                 </Paper>
               </Grid>
@@ -91,6 +107,9 @@ const Dashboard = () => {
                     height: 300,
                   }}
                 >
+                  <Typography gutterBottom variant="subtitle1" component="div">
+                    수량-재고
+                  </Typography>
                   <StockChart />
                 </Paper>
               </Grid>

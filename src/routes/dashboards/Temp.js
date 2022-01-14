@@ -8,6 +8,7 @@ import TempChart2 from '../../graphs/TempChart2';
 import TempChart3 from '../../graphs/TempChart3';
 import TempChart4 from '../../graphs/TempChart4';
 import TempTableTest from '../../tables/TempTable';
+import { Typography } from '@mui/material';
 
 const Temp = () => {
     return (
@@ -23,9 +24,12 @@ const Temp = () => {
                     p: 2,
                     display: 'flex',
                     flexDirection: 'column',
-                    height: 300,
+                    height: 330,
                   }}
                 >
+                  <Typography gutterBottom variant="subtitle1" component="div">
+                    가열로 hotRolling1
+                  </Typography>
                   <TempChart1 />
                 </Paper>
               </Grid>
@@ -36,9 +40,12 @@ const Temp = () => {
                     p: 2,
                     display: 'flex',
                     flexDirection: 'column',
-                    height: 300,
+                    height: 330,
                   }}
                 >
+                  <Typography gutterBottom variant="subtitle1" component="div">
+                    가열로 hotRolling2
+                  </Typography>
                   <TempChart2 />
                 </Paper>
               </Grid>
@@ -49,9 +56,12 @@ const Temp = () => {
                     p: 2,
                     display: 'flex',
                     flexDirection: 'column',
-                    height: 300,
+                    height: 330,
                   }}
                 >
+                  <Typography gutterBottom variant="subtitle1" component="div">
+                    가열로 hotRolling3
+                  </Typography>
                   <TempChart3 />
                 </Paper>
               </Grid>
@@ -62,9 +72,12 @@ const Temp = () => {
                     p: 2,
                     display: 'flex',
                     flexDirection: 'column',
-                    height: 300,
+                    height: 330,
                   }}
                 >
+                  <Typography gutterBottom variant="subtitle1" component="div">
+                    가열로 hotRolling4
+                  </Typography>
                   <TempChart4 />
                 </Paper>
               </Grid>
