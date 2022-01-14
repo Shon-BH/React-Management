@@ -49,11 +49,18 @@ function FirstFormRow({setCompany, regDate, companyList}) {
     <React.Fragment>
       <Grid item xs={2}>
           <Item><ComboBoxCompany setCompany={setCompany} companyList={companyList}/></Item>
-        </Grid>
+       </Grid>
           
         <Grid item xs={2}>
           <Item>
-            <TextField 
+            <TextField
+                required
+                id="outlined-required"
+                label="연락처"
+                value={regDate}
+                defaultValue="value" 
+            />
+            {/* <TextField 
                   id="filled-read-only-input" 
                   label="등록일"
                   InputProps={{
@@ -61,7 +68,7 @@ function FirstFormRow({setCompany, regDate, companyList}) {
                   }} 
                   variant="filled"
                   value={regDate} 
-              />
+              /> */}
           </Item>
         </Grid>
 
@@ -69,47 +76,68 @@ function FirstFormRow({setCompany, regDate, companyList}) {
   );
 }
 
-function SecondFormRow() {
+function SecondFormRow({resUser}) {
     return (
       <React.Fragment>
         <Grid item xs={2}>
          <Item>
-            <TextField 
+              <TextField
+                required
+                id="outlined-required"
+                label="담당자"
+                value={resUser.name}
+                defaultValue="value"
+              />
+            {/* <TextField 
                 id="filled-read-only-input" 
                 label="담당자"
                 InputProps={{
                     readOnly: true,
                 }} 
                 variant="filled"
-                value="손준우" 
-            />
+                value = {resUser.name} 
+            /> */}
           </Item>
           {/* <Item>Item</Item> */}
         </Grid>
         <Grid item xs={2}>
             <Item>
-                <TextField 
+                <TextField
+                  required
+                  id="outlined-required"
+                  label="연락처"
+                  value={resUser.phone}
+                  defaultValue="value" 
+                />
+                {/* <TextField 
                     id="filled-read-only-input" 
                     label="연락처"
                     InputProps={{
                         readOnly: true,
                     }} 
                     variant="filled"
-                    value="010-1234-4567" 
-                />
+                    value={resUser.phone}
+                /> */}
             </Item>
         </Grid>
         <Grid item xs={2}>
             <Item>
-                <TextField 
+                <TextField
+                  required
+                  id="outlined-required"
+                  label="연락처"
+                  value={resUser.userId}
+                  defaultValue="value" 
+                />
+                {/* <TextField 
                     id="filled-read-only-input" 
                     label="이메일"
                     InputProps={{
                         readOnly: true,
                     }} 
                     variant="filled"
-                    value = "sjw3957@gmail.com"
-                />
+                    value = {resUser.userId}
+                /> */}
             </Item>
         </Grid>
       </React.Fragment>
@@ -153,10 +181,10 @@ function SecondFormRow() {
 
 export default function NestedGrid() {
 
-    const [company, setCompany] = React.useState({
-      label: '',
-      companyId: '',      
-    });
+    // const [company, setCompany] = React.useState({
+    //   label: '',
+    //   companyId: '',      
+    // });
 
     const date = NewFormatDate(new Date());
     const [regDate, setRegDate] = React.useState(date);
@@ -166,38 +194,49 @@ export default function NestedGrid() {
     const [processStart, setProcessStart] = React.useState(date);
     const [processEnd, setProcessEnd] = React.useState(date);
     const [productId, setProductId] = React.useState("");
-   
+    const [companyId, setCompany] = React.useState("");
+
     const [stockPlan, setStockPlan] = React.useState(0);
     const [productList, setProductList] = React.useState([]);
     const [companyList, setCompanyList] = React.useState([]);
+    const [resUser, setResUser] = React.useState([]);
+   
 
-    const ProductAPI = async() => {
-      const jsonData = await axios.get("/process-service/products");
-      //console.log(jsonData.data);
-      let tempList = [];
-      jsonData.data.map( (v) => {
-        tempList.push(v.productId);
-      });
-      setProductList(tempList);
-    }
+    const ProductPlanAPI = async() => {
+      const jsonData = await axios.get("/process-service/son/plans");
 
-    const CompanyAPI = async() => {
-      const jsonData = await axios.get("/process-service/companies");
-      //console.log(jsonData.data);
-      let tempList = [];
-      jsonData.data.map( (v) =>{
-        tempList.push({
-          label : v.name,
-          companyId : v.companyId,
-        });
+      let tempCompanylist = [];
+      let tempProductlist = [];
+      const responseUser = jsonData.data.responseUser;
+
+      const clist = jsonData.data.companyList;
+      const plist = jsonData.data.productList;
+
+      clist.map((c) => {
+        const temp = {
+          label : c.name,
+          companyId : c.companyId,
+        }
+       tempCompanylist.push(temp);
+       // console.log(JSON.stringify(JSON.stringify(c)));
       });
-      setCompanyList(tempList);
+
+      plist.map( (p) => {
+         tempProductlist.push(p.productId);
+      });
+
+      setCompanyList(tempCompanylist);
+      setProductList(tempProductlist);
+      setResUser(responseUser);
     }
 
     React.useEffect(()=> {
-        ProductAPI();
-        CompanyAPI();
+        // ProductAPI();
+        // CompanyAPI();
+        ProductPlanAPI();
     },[]);
+
+    
     const f1 = () => {
 
       const check = /\d/;
@@ -211,14 +250,27 @@ export default function NestedGrid() {
         setStockPlan(0);
       }
       else{
-        // axios.post('/process-service/orders', JSON.stringify(jsonData) ,{
-        //   headers: {
-        //     "Content-Type": "application/json",
-        //   },
-        // })
-        // .then(
-        //   (res) =>{console.log(res.data);}
-        // )         
+        const planData = {
+          userId : resUser.userId,
+          productId : productId,
+          companyId : companyId,
+          prprocessStart: processStart,
+          processEnd: processEnd,
+          stockPlan: stockPlan,
+        }
+
+        axios.post('/process-service/orders', JSON.stringify(planData) ,{
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+        .then(
+          (res) =>{console.log(res.data);}
+        ).catch(error => {
+          // ... 에러 처리
+          alert("error");      
+        });
+
       }      
     }
  
@@ -236,8 +288,11 @@ export default function NestedGrid() {
                     <FirstFormRow setCompany={setCompany} regDate={regDate} companyList={companyList} />
                 </Grid>
                 <Grid container item spacing={3}>
-                    <SecondFormRow />
+                    <SecondFormRow resUser={resUser} />
                 </Grid>
+                {/* <Grid container item spacing={3}>
+                    <SecondFormRow resUser={resUser}/>
+                </Grid> */}
                 <HorizonLine />
               </Grid>
 
