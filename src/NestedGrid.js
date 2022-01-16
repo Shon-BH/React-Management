@@ -4,19 +4,16 @@ import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
-
 import HorizonLine from './HorizontalLine';
-
 import Table1 from './tables/Table1';
 import Table2 from './tables/Table2';
-
 import ComboBoxCompany from './comboboxes/ComboBoxCompany';
 import ComboBoxProduct from './comboboxes/ComboBoxProduct';
-
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import WebAssetIcon from '@mui/icons-material/WebAsset';
 import axios from 'axios';
 import BasicDatePicker from './date/BasicDatePicker';
+import { store } from './store/store';
 
 const Item = styled(Paper)(({ theme }) => ({
   ...theme.typography.body2,
@@ -56,9 +53,12 @@ function FirstFormRow({setCompany, regDate, companyList}) {
             <TextField
                 required
                 id="outlined-required"
-                label="연락처"
-                value={regDate}
-                defaultValue="value" 
+                label="등록일"
+                InputProps={{
+                  readOnly: true,
+                }} 
+                //value={regDate}
+                defaultValue={regDate}
             />
             {/* <TextField 
                   id="filled-read-only-input" 
@@ -81,12 +81,14 @@ function SecondFormRow({resUser}) {
       <React.Fragment>
         <Grid item xs={2}>
          <Item>
-              <TextField
-                required
+              <TextField                
                 id="outlined-required"
-                label="담당자"
-                value={resUser.name}
-                defaultValue="value"
+                label="담당자"                
+                InputProps={{
+                  readOnly: true,
+                }}
+                defaultValue={resUser.name} 
+                value = {resUser.name} 
               />
             {/* <TextField 
                 id="filled-read-only-input" 
@@ -102,13 +104,23 @@ function SecondFormRow({resUser}) {
         </Grid>
         <Grid item xs={2}>
             <Item>
-                <TextField
+              <TextField
+                  id="outlined-read-only-input"
+                  label="연락처"
+                  defaultValue={resUser.phone}
+                  InputProps={{
+                    readOnly: true,
+                  }}
+                  value = {resUser.phone}
+                />
+
+                {/* <TextField
                   required
                   id="outlined-required"
                   label="연락처"
                   value={resUser.phone}
-                  defaultValue="value" 
-                />
+                  // defaultValue="value" 
+                /> */}
                 {/* <TextField 
                     id="filled-read-only-input" 
                     label="연락처"
@@ -123,12 +135,21 @@ function SecondFormRow({resUser}) {
         <Grid item xs={2}>
             <Item>
                 <TextField
+                  id="outlined-read-only-input"
+                  label="이메일"
+                  defaultValue="email"
+                  InputProps={{
+                    readOnly: true,
+                  }}
+                  value={resUser.userId}
+                />
+                {/* <TextField
                   required
                   id="outlined-required"
-                  label="연락처"
+                  label="이메일"
                   value={resUser.userId}
-                  defaultValue="value" 
-                />
+                  // defaultValue="value" 
+                /> */}
                 {/* <TextField 
                     id="filled-read-only-input" 
                     label="이메일"
@@ -181,16 +202,10 @@ function SecondFormRow({resUser}) {
 
 export default function NestedGrid() {
 
-    // const [company, setCompany] = React.useState({
-    //   label: '',
-    //   companyId: '',      
-    // });
-
+    const [state,dispatch] = React.useContext(store);
     const date = NewFormatDate(new Date());
     const [regDate, setRegDate] = React.useState(date);
-//    const [officer, setOfficer] = React.useState("");
-//    const [email, setEmail] = React.useState("");
-//    const [phoneNum, setphoneNum] = React.useState("");
+
     const [processStart, setProcessStart] = React.useState(date);
     const [processEnd, setProcessEnd] = React.useState(date);
     const [productId, setProductId] = React.useState("");
@@ -199,15 +214,16 @@ export default function NestedGrid() {
     const [stockPlan, setStockPlan] = React.useState(0);
     const [productList, setProductList] = React.useState([]);
     const [companyList, setCompanyList] = React.useState([]);
-    const [resUser, setResUser] = React.useState([]);
-   
+    const [resUser, setResUser] = React.useState({name:"", phone:"", userId:""});
+    
+    
 
     const ProductPlanAPI = async() => {
-      const jsonData = await axios.get("/process-service/son/plans");
-
+      const jsonData =  await axios.get(`/process-service/${state.userId}/plans`);
+      //const jsonData =  await APICall();
       let tempCompanylist = [];
       let tempProductlist = [];
-      const responseUser = jsonData.data.responseUser;
+      const responseUser =jsonData.data.responseUser;
 
       const clist = jsonData.data.companyList;
       const plist = jsonData.data.productList;
@@ -222,7 +238,11 @@ export default function NestedGrid() {
       });
 
       plist.map( (p) => {
-         tempProductlist.push(p.productId);
+        const temp = {
+          label: p.productId,
+          productId : p.productId
+        }
+         tempProductlist.push(temp);
       });
 
       setCompanyList(tempCompanylist);
@@ -233,6 +253,7 @@ export default function NestedGrid() {
     React.useEffect(()=> {
         // ProductAPI();
         // CompanyAPI();
+        console.log(state.userId, state.token);
         ProductPlanAPI();
     },[]);
 
@@ -254,7 +275,7 @@ export default function NestedGrid() {
           userId : resUser.userId,
           productId : productId,
           companyId : companyId,
-          prprocessStart: processStart,
+          processStart: processStart,
           processEnd: processEnd,
           stockPlan: stockPlan,
         }

@@ -1,4 +1,4 @@
-import { SETUSERID, SETNAME, SETPHONE } from './actionTypes';
+import { SETUSERID, SETTOKEN} from './actionTypes';
 
 export const reducer = (state, action) => {
     const {type, payload} = action;
@@ -6,10 +6,8 @@ export const reducer = (state, action) => {
     switch(type){
         case SETUSERID:
             return {...state, userId: payload };
-        case SETNAME:
-            return {...state, name: payload};
-        case SETPHONE:
-            return {...state, phone: payload};
+        case SETTOKEN:
+            return {...state, token: payload};
         default:
             return state;
     }

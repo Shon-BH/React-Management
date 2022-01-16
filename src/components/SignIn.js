@@ -14,6 +14,9 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
+import { store } from '../store/store';
+import { setUserId, setToken } from '../store/actionCreators';
+
 
 function Copyright(props) {
   return (
@@ -32,29 +35,27 @@ const theme = createTheme();
 
 
 export default function SignIn() {
-
+  const [state, dispatch] = React.useContext(store);
   const history = useHistory();
 
-  const onLogin = (userId, password) => {
-    const data = {
-      userId,
-      password,
-    };
+  const onLogin = (loginJson) => {    
 
-    axios.post('/user-service/login', data)
+    axios.post('/user-service/login', loginJson)
       .then(response => {
-      alert("login success");
-      console.log(response.data);
-      const { accessToken } = response.data;
-  
-      // API 요청하는 콜마다 헤더에 accessToken 담아 보내도록 설정
-      axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
-  
-      // accessToken을 localStorage, cookie 등에 저장하지 않는다!
-      history.push("/");
-    }).catch(error => {
+      
+        const { accessToken } = response.headers.token;      
+          
+        // API 요청하는 콜마다 헤더에 accessToken 담아 보내도록 설정
+        axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
+        
+        dispatch(setToken(`${accessToken}`));  
+        dispatch(setUserId(loginJson.userId));      
+        
+        alert("login success");
+        history.push("/");
+      }).catch(error => {
       // ... 에러 처리
-      alert("error");      
+      alert(error);      
     });
   }
 
@@ -65,9 +66,13 @@ export default function SignIn() {
      const userId = data.get("email");
      const password = data.get("password");
 
-    onLogin(userId, password);
-
-    //window.location.href = '/';
+     const loginJson = {
+       userId : userId,
+       password: password
+     }
+    
+    onLogin(loginJson);
+    
   };
 
   return (

@@ -1,6 +1,4 @@
-import { SETUSERID, SETNAME, SETPHONE } from './actionTypes';
+import { SETUSERID, SETTOKEN } from './actionTypes';
 
-
-export const setUserId = () => ({ type: SETUSERID });
-export const setName = () => ({ type: SETNAME });
-export const setphone = () => ({ type: SETPHONE });
+export const setUserId = (val) => ({ type: SETUSERID, payload: val });
+export const setToken = (val) => ({ type: SETTOKEN, payload: val });

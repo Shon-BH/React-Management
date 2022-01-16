@@ -3,8 +3,7 @@ import { reducer } from "./reducer";
 
 const initialState = {
     userId : "",
-    name: "",
-    phone : "",
+    token: "",
 };
 
 const store = createContext(initialState);

@@ -34,8 +34,8 @@ export default function ComboBoxProduct({setProductId, productList}) {
         renderInput={(params) => 
         <TextField {...params} label="상품정보" />}
         onChange={ (e, val) => {          
-          setProductId(val);
-        }
+            setProductId(val.productId);
+          } 
         }
       />
     
