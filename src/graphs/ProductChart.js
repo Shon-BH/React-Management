@@ -21,7 +21,7 @@ export default function ProductChart() {
   const [rows ,setRows] = React.useState([]);
 
   const statsLogFunc = async () => {
-    const jsonData = await axios.get("/stats-service/product_stats_log");
+    const jsonData = await axios.get("/stats-service/product_log");
     setRows(jsonData.data);
   }  
 
@@ -36,19 +36,19 @@ export default function ProductChart() {
 
     // eslint-disable-next-line array-callback-return
     rows.map((row) => {
-      if (row.productId === "ANCOR-C" && row.status === "불량") {
+      if (row.productId === "ANCOR-C" && row.productStatus === "불량") {
         cnts[0] += 1;
       }
-      else if (row.productId === "ANCOR-H" && row.status === "불량") {
+      else if (row.productId === "ANCOR-H" && row.productStatus === "불량") {
         cnts[1] += 1;
       }
-      else if (row.productId === "JS-SECC" && row.status === "불량") {
+      else if (row.productId === "JS-SECC" && row.productStatus === "불량") {
         cnts[2] += 1;
       }
-      else if (row.productId === "SAE1070" && row.status === "불량") {
+      else if (row.productId === "SAE1070" && row.productStatus === "불량") {
         cnts[3] += 1;
       }
-      else if (row.productId === "KS-SECC" && row.status === "불량") {
+      else if (row.productId === "KS-SECC" && row.productStatus === "불량") {
         cnts[4] += 1;
       }
     });

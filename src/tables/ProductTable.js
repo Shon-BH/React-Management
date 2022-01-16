@@ -200,7 +200,7 @@ export default function EnhancedTable() {
   const [rows, setRows] = React.useState([]);
 
   const HeatingLogFunc = async () => {
-    const jsonData = await axios.get("/stats-service/product_stats_log");
+    const jsonData = await axios.get("/stats-service/product_log");
     setRows(jsonData.data);
   }  
 
@@ -318,7 +318,7 @@ export default function EnhancedTable() {
                       <TableCell align="right">{row.thickness}</TableCell>
                       <TableCell align="right">{row.width}</TableCell>
                       <TableCell align="right">{row.length}</TableCell>
-                      <TableCell align="right">{row.status}</TableCell>
+                      <TableCell align="right">{row.productStatus}</TableCell>
                     </TableRow>
                   );
                 })}
