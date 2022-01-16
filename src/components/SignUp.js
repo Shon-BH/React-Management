@@ -16,6 +16,7 @@ import FormHelperTexts from '@mui/material/FormHelperText';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useHistory } from 'react-router-dom';
 import { FormControl } from '@mui/material';
+import axios from 'axios';
 
 function Copyright(props) {
   return (
@@ -70,41 +71,57 @@ export default function SignUp() {
     // eslint-disable-next-line no-console
     
     const joinData = {
-      email: data.get('email'),
+      userId: data.get('email'),
       phone: data.get('phone'),
       name: data.get('name'),
       password: data.get('password'),
-      rePassword: data.get('rePassword'),
+      
     };
-    const { name, email, phone, password, rePassword } = joinData;
+    const rePassword = data.get('rePassword');
+    const { name, email, phone, password } = joinData;
 
     // 이메일 유효성 체크
     const emailRegex = /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
-    if (!emailRegex.test(email)) setEmailError('올바른 이메일 형식이 아닙니다.');
-    else setEmailError('');
-
+    if (!emailRegex.test(email)) {
+      setEmailError('올바른 이메일 형식이 아닙니다.');    
+      return;
+    }else {
+      setEmailError('');
+    }
     // 휴대전화 유효성 체크
-    const phoneRegex = /^(?:(010-\d{4})|(01[1|6|7|8|9]-\d{3,4}))-(\d{4})$/;
-    if (!phoneRegex.test(phone)) setPhoneError('올바른 휴대전화 번호 형식이 아닙니다.');
+    //const phoneRegex = /^(?:(010-\d{4})|(01[1|6|7|8|9]-\d{3,4}))-(\d{4})$/;
+    const phoneRegex = /\d/;
+    if (!phoneRegex.test(phone)) {
+      setPhoneError('올바른 휴대전화 번호 형식이 아닙니다.');
+      return;
+    }
     else setPhoneError('');
 
     // 비밀번호 유효성 체크
     const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/;
-    if (!passwordRegex.test(password))
+    if (!passwordRegex.test(password)){
       setPasswordState('숫자+영문자+특수문자 조합으로 8자리 이상 입력해주세요!');
-    else setPasswordState('');
+      return;
+    }else setPasswordState('');
 
     // 비밀번호 같은지 체크
-    if (password !== rePassword) setPasswordError('비밀번호가 일치하지 않습니다.');
-    else setPasswordError('');
+    if (password !== rePassword) {
+      setPasswordError('비밀번호가 일치하지 않습니다.');
+      return;
+    }else setPasswordError('');
 
     // 이름 유효성 검사
     const nameRegex = /^[가-힣a-zA-Z]+$/;
-    if (!nameRegex.test(name) || name.length < 1) setNameError('올바른 이름을 입력해주세요.');
-    else setNameError('');
+    if (!nameRegex.test(name) || name.length < 1) {
+      setNameError('올바른 이름을 입력해주세요.');
+      return;
+    }else setNameError('');
 
     // 회원가입 동의 체크
-    if (!checked) alert('회원가입 약관에 동의해주세요.');
+    if (!checked) {
+      alert('회원가입 약관에 동의해주세요.');
+      return;
+    }
 
     // if (
     //   emailRegex.test(email) &&
@@ -116,10 +133,19 @@ export default function SignUp() {
     //   onhandlePost(joinData);
     // }
 
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    axios.post('/user-service/users', JSON.stringify(joinData) ,{
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }).then(
+        (res) => {
+          alert("가입완료");
+          history.push("/signin");
+        }
+      )   
+      .catch(function(error){
+        alert("중복된 ID 입니다."); 
+      })
   };
     
 

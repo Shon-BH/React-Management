@@ -21,6 +21,7 @@ import Switch from '@mui/material/Switch';
 import DeleteIcon from '@mui/icons-material/Delete';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import { visuallyHidden } from '@mui/utils';
+import axios from 'axios';
 
 function createData(id1, id2, id3, id4, id5) {
     return {
@@ -28,14 +29,16 @@ function createData(id1, id2, id3, id4, id5) {
     };
 }
 
-const rows = [
-  createData('B1234', 3, 10),
-  createData('B1234', 3, 10),
-  createData('B1234', 3, 10),
-  createData('B1234', 3, 10),
-  createData('B1234', 3, 10),
-  createData('B1234', 3, 10),
-];
+// const rows = [
+//   createData('B1234', 3, 10),
+//   createData('B1234', 3, 10),
+//   createData('B1234', 3, 10),
+//   createData('B1234', 3, 10),
+//   createData('B1234', 3, 10),
+//   createData('B1234', 3, 10),
+// ];
+
+// let rows =[];
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -69,23 +72,29 @@ function stableSort(array, comparator) {
 
 const headCells = [
   {
-        id: 'id1',
+        id: 'productId',
         numeric: false,
         disablePadding: true,
         label: '코일번호',
     },
     {
-        id: 'id2',
+        id: 'thickness',
         numeric: true,
         disablePadding: false,
         label: '두께',
     },
     {
-        id: 'id3',
+        id: 'width',
         numeric: true,
         disablePadding: false,
         label: '폭',
     },
+    {
+      id: 'length',
+      numeric: true,
+      disablePadding: false,
+      label: '길이',
+  },
 ];
 
 function EnhancedTableHead(props) {
@@ -206,6 +215,28 @@ export default function EnhancedTable() {
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [rows, setRows] = React.useState([]);
+
+  //const [productList, setProductList] = React.useState([]);
+
+  const ProductAPI = async() => {
+    const jsonData = await axios.get("/process-service/products");
+    //console.log(jsonData.data);
+    let tempList = [];
+    jsonData.data.map( (v) =>{
+      tempList.push(v);
+    });
+    setRows(tempList);
+  }
+
+  React.useEffect(()=>{
+    ProductAPI();
+    // productList.map((v)=>{
+    //   setRows(v);
+    // });    
+    
+    console.log(rows);
+  },[]);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -225,7 +256,7 @@ export default function EnhancedTable() {
   const handleClick = (event, name) => {
     const selectedIndex = selected.indexOf(name);
     let newSelected = [];
-
+    
     if (selectedIndex === -1) {
       newSelected = newSelected.concat(selected, name);
     } else if (selectedIndex === 0) {
@@ -261,8 +292,13 @@ export default function EnhancedTable() {
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
+  const f1 = (e) => {
+    e.preventDefault();
+    console.log(rows);
+  }
   return (
     <Box sx={{ width: '100%' }}>
+      <button onClick={f1}>button</button>
       <Paper sx={{ width: '100%', mb: 2 }}>
         <EnhancedTableToolbar numSelected={selected.length} />
         <TableContainer>
@@ -313,10 +349,11 @@ export default function EnhancedTable() {
                         scope="row"
                         padding="none"
                       >
-                        {row.id1}
+                        {row.productId}
                       </TableCell>
-                        <TableCell align="right">{row.id2}</TableCell>
-                            <TableCell align="right">{row.id3}</TableCell>
+                       <TableCell align="right">{row.thickness}</TableCell>
+                       <TableCell align="right">{row.width}</TableCell>
+                       <TableCell align="right">{row.length}</TableCell>
                     </TableRow>
                   );
                 })}

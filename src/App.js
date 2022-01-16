@@ -16,6 +16,11 @@ function App() {
             <SignUp/>
           </Route>
 
+
+          <Route path="/dashboard">
+            <Dashboard/>
+          </Route>
+
           <Route path="/submenu/inbox">
             <PersistentDrawerLeft selectMenu={'inbox'}/>
           </Route>
@@ -28,6 +33,10 @@ function App() {
           <Route path="/submenu/admin">
             <PersistentDrawerLeft selectMenu={'admin'}/>              
           </Route>
+
+          <Route path="/submenu/">
+            <PersistentDrawerLeft selectMenu={''}/>             
+
           <Route path="/dashmenu/dashboard">
             <PersistentDrawerLeft selectMenu={'dashboard'}/>              
           </Route>
@@ -39,9 +48,11 @@ function App() {
           </Route>
           <Route path="/dashmenu/product">
             <PersistentDrawerLeft selectMenu={'product'}/>              
+
           </Route>
           <Route path="/">
-            <PersistentDrawerLeft selectMenu={'home'}/>
+            {/* <PersistentDrawerLeft selectMenu={'home'}/> */}
+            <SignIn/>
           </Route>
         </Switch>
       </Router>
