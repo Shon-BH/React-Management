@@ -23,6 +23,8 @@ import Inbox from './routes/Inbox';
 import Starred from './routes/Starred';
 import Drafts from './routes/Drafts';
 import Admin from './routes/Admin';
+import { store } from './store/store';
+
 
 const drawerWidth = 240;
 
@@ -75,6 +77,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 export default function PersistentDrawerLeft({selectMenu}) {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);  
+  const [state,dispatch] = React.useContext(store);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -101,12 +104,18 @@ export default function PersistentDrawerLeft({selectMenu}) {
       text: '가열로 데이터 모니터링',
       link: '/submenu/drafts'      
     },
-    {
-      text: '관리자',
-      link: '/submenu/admin'      
-    },
+    // {
+    //   text: '관리자',
+    //   link: '/submenu/admin'      
+    // },
     
   ]
+
+  const adminSubeMenu =  {
+    text: '관리자',
+    link: '/submenu/admin'    
+  }
+
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -146,20 +155,35 @@ export default function PersistentDrawerLeft({selectMenu}) {
           </IconButton>
         </DrawerHeader>
         <Divider />
-        <List>
-                    
-          {subMenuList.map((obj, index) => (
-              <ListItem button key={obj.text}>
-                  <ListItemIcon>
-                    {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                  </ListItemIcon>
-                  <Link to={obj.link}>
-                    <ListItemText primary={obj.text} />
-                  </Link>
-              </ListItem>
-          ))}
 
-        </List>
+        {state.userId === 'admin@poscoict.com' ? 
+          <List>
+                <ListItem button key={adminSubeMenu.text}>
+                      <ListItemIcon>
+                        <InboxIcon />
+                      </ListItemIcon>
+                      <Link to={adminSubeMenu.link}>
+                        <ListItemText primary={adminSubeMenu.text} />
+                      </Link>
+                  </ListItem> 
+          </List>
+        :
+
+          <List>
+                        
+                {subMenuList.map((obj, index) => (
+                    <ListItem button key={obj.text}>
+                        <ListItemIcon>
+                          {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                        </ListItemIcon>
+                        <Link to={obj.link}>
+                          <ListItemText primary={obj.text} />
+                        </Link>
+                    </ListItem>
+                ))
+                }                     
+          </List>
+      }
         <Divider />
       </Drawer>
       <Main open={open}>
