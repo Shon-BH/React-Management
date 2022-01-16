@@ -78,11 +78,6 @@ const headCells = [
         disablePadding: false,
         label: '두께',
     },
-    {
-        numeric: true,
-        disablePadding: false,
-        label: '등록 일시',
-    },
 ];
 
 function EnhancedTableHead(props) {
@@ -208,7 +203,7 @@ export default function EnhancedTable() {
   const [rows, setRows] = React.useState([]);
 
   const AdminProductFunc = async () => {
-    const jsonData = await axios.get("/process-service/admin_product");
+    const jsonData = await axios.get("/process-service/product_log");
     setRows(jsonData.data);
   }  
 
@@ -349,10 +344,9 @@ export default function EnhancedTable() {
                       >
                         {row.productId}
                       </TableCell>
-                        <TableCell align="right">{row.productLen}</TableCell>
-                        <TableCell align="right">{row.productWidth}</TableCell>
-                        <TableCell align="right">{row.productThick}</TableCell>
-                        <TableCell align="right">{row.productUpdate}</TableCell>
+                        <TableCell align="right">{row.length}</TableCell>
+                        <TableCell align="right">{row.width}</TableCell>
+                        <TableCell align="right">{row.thickness}</TableCell>
                     </TableRow>
                   );
                 })}

@@ -59,29 +59,24 @@ function stableSort(array, comparator) {
 
 const headCells = [
   {
-        numeric: false,
-        disablePadding: true,
-        label: '회사명',
-    },
-    {
-        numeric: true,
-        disablePadding: false,
-        label: '담당자 이름',
-    },
-    {
-        numeric: true,
-        disablePadding: false,
-        label: '담당자 이메일',
-    },
-    {
-        numeric: true,
-        disablePadding: false,
-        label: '담당자 번호',
-    },
-    {
-      numeric: true,
-      disablePadding: false,
-      label: '등록 일시',
+    numeric: false,
+    disablePadding: true,
+    label: '회사명',
+  },
+  {
+    numeric: true,
+    disablePadding: false,
+    label: '담당자 이름',
+  },
+  {
+    numeric: true,
+    disablePadding: false,
+    label: '담당자 번호',
+  },
+  {
+    numeric: true,
+    disablePadding: false,
+    label: '담당자 이메일',
   },
 ];
 
@@ -208,7 +203,7 @@ export default function EnhancedTable() {
   const [rows, setRows] = React.useState([]);
 
   const AdminClientFunc = async () => {
-    const jsonData = await axios.get("/process-service/admin_client");
+    const jsonData = await axios.get("/process-service/companies");
     setRows(jsonData.data);
   }  
 
@@ -347,12 +342,11 @@ export default function EnhancedTable() {
                         scope="row"
                         padding="none"
                       >
-                        {row.clientId}
+                        {row.companyId}
                       </TableCell>
-                        <TableCell align="right">{row.clientName}</TableCell>
-                            <TableCell align="right">{row.clientEmail}</TableCell>
-                            <TableCell align="right">{row.clientNumber}</TableCell>
-                            <TableCell align="right">{row.clientUpdate}</TableCell>
+                      <TableCell align="right">{row.name}</TableCell>
+                      <TableCell align="right">{row.phone}</TableCell>
+                      <TableCell align="right">{row.email}</TableCell>
                     </TableRow>
                   );
                 })}
