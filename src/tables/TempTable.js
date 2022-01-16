@@ -43,6 +43,7 @@ function getComparator(order, orderBy) {
 // need to support IE11, you can use Array.prototype.sort() directly
 function stableSort(array, comparator) {
   const stabilizedThis = array.map((el, index) => [el, index]);
+
   stabilizedThis.sort((a, b) => {
     const order = comparator(a[0], b[0]);
     if (order !== 0) {
@@ -55,65 +56,34 @@ function stableSort(array, comparator) {
 
 const headCells = [
   {
-        id: 'id1',        
-        umeric: false,
-        disablePadding: true,
-        label: '주문번호',
-    },
-    {
-        id: 'id2',
-        numeric: true,
-        disablePadding: false,
-        label: '코일번호',
-    },
-    {
-        id: 'id3',
-        numeric: true,
-        disablePadding: false,
-        label: '공정시작일',
+    numeric: false,
+    disablePadding: true,
+    label: '가열로 번호',
   },
-    {
-        id: 'id4',
-        numeric: true,
-        disablePadding: false,
-        label: '공정마감일',
+  {
+    numeric: true,
+    disablePadding: false,
+    label: '예열대 온도',
   },
-    {
-        id: 'id5',
-        numeric: true,
-        disablePadding: false,
-        label: '요청회사',
+  {
+    numeric: true,
+    disablePadding: false,
+    label: '가열대 온도',
   },
-    {
-        id: 'id6',
-        numeric: true,
-        disablePadding: false,
-        label: '담당자',
+  {
+    numeric: true,
+    disablePadding: false,
+    label: '균열대 온도',
   },
-    {
-        id: 'id7',
-        numeric: true,
-        disablePadding: false,
-        label: '계획수량',
+  {
+    numeric: true,
+    disablePadding: false,
+    label: '온도 측정시간',
   },
-    {
-        id: 'id8',
-        numeric: true,
-        disablePadding: false,
-        label: '현재고',
-  },
-    {
-        id: 'id9',
-        numeric: true,
-        disablePadding: false,
-        label: '주문상태',
-    },
 ];
 
-
 function EnhancedTableHead(props) {
-  const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } =
-    props;
+  const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } = props;
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
   };
@@ -176,8 +146,7 @@ const EnhancedTableToolbar = (props) => {
         pl: { sm: 2 },
         pr: { xs: 1, sm: 1 },
         ...(numSelected > 0 && {
-          bgcolor: (theme) =>
-            alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity),
+          bgcolor: (theme) => alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity),
         }),
       }}
     >
@@ -197,7 +166,6 @@ const EnhancedTableToolbar = (props) => {
           id="tableTitle"
           component="div"
         >
-          Nutrition
         </Typography>
       )}
 
@@ -222,7 +190,6 @@ EnhancedTableToolbar.propTypes = {
   numSelected: PropTypes.number.isRequired,
 };
 
-
 export default function EnhancedTable() {
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');
@@ -232,14 +199,13 @@ export default function EnhancedTable() {
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [rows, setRows] = React.useState([]);
 
-  const ordersFunc = async () => {
-    const jsonData = await axios.get("/process-service/orders");
+  const HeatingLogFunc = async () => {
+    const jsonData = await axios.get("/stats-service/heating_furnance_temperature_log");
     setRows(jsonData.data);
-    //console.log(jsonData.data);
   }  
 
   React.useEffect(()=>{
-    ordersFunc();
+    HeatingLogFunc();
   },[]);
 
   const handleRequestSort = (event, property) => {
@@ -293,8 +259,7 @@ export default function EnhancedTable() {
   const isSelected = (name) => selected.indexOf(name) !== -1;
 
   // Avoid a layout jump when reaching the last page with empty rows.
-  const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
+  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
   return (
     <Box sx={{ width: '100%' }}>
@@ -321,7 +286,8 @@ export default function EnhancedTable() {
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
                   const isItemSelected = isSelected(row.name);
-                  const labelId = `enhanced-table-checkbox-${index}`;                  
+                  const labelId = `enhanced-table-checkbox-${index}`;
+
                   return (
                     <TableRow
                       hover
@@ -347,16 +313,12 @@ export default function EnhancedTable() {
                         scope="row"
                         padding="none"
                       >
-                        {row.order_id}
+                        {row.heatingFurnanceId}
                       </TableCell>
-                       <TableCell align="right">{row.product_id}</TableCell>
-                      <TableCell align="right">{row.process_start}</TableCell>
-                      <TableCell align="right">{row.process_end}</TableCell>
-                      <TableCell align="right">{row.id5}</TableCell>
-                      <TableCell align="right">{row.user_id}</TableCell>
-                      <TableCell align="right">{row.stock_plan}</TableCell>
-                      <TableCell align="right">{row.id8}</TableCell>
-                      <TableCell align="right">{row.status}</TableCell>
+                      <TableCell align="right">{row.preheatingZoneTemp}</TableCell>
+                      <TableCell align="right">{row.heatingZoneTemp}</TableCell>
+                      <TableCell align="right">{row.soakingZoneTemp}</TableCell>
+                      <TableCell align="right">{row.heatingFurnanceUpdate}</TableCell>
                     </TableRow>
                   );
                 })}

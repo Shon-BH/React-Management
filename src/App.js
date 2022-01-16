@@ -1,9 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
 import SignIn from "./components/SignIn";
 import SignUp from "./components/SignUp";
-import Dashboard from "./dashboard/Dashboard"
 import PersistentDrawerLeft from './PersistentDrawerLeft';
+import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
 
 function App() {
   return (
@@ -18,10 +16,10 @@ function App() {
             <SignUp/>
           </Route>
 
+
           <Route path="/dashboard">
             <Dashboard/>
           </Route>
-
 
           <Route path="/submenu/inbox">
             <PersistentDrawerLeft selectMenu={'inbox'}/>
@@ -35,8 +33,22 @@ function App() {
           <Route path="/submenu/admin">
             <PersistentDrawerLeft selectMenu={'admin'}/>              
           </Route>
+
           <Route path="/submenu/">
-            <PersistentDrawerLeft selectMenu={''}/>              
+            <PersistentDrawerLeft selectMenu={''}/>             
+
+          <Route path="/dashmenu/dashboard">
+            <PersistentDrawerLeft selectMenu={'dashboard'}/>              
+          </Route>
+          <Route path="/dashmenu/temp">
+            <PersistentDrawerLeft selectMenu={'temp'}/>              
+          </Route>
+          <Route path="/dashmenu/stock">
+            <PersistentDrawerLeft selectMenu={'stock'}/>              
+          </Route>
+          <Route path="/dashmenu/product">
+            <PersistentDrawerLeft selectMenu={'product'}/>              
+
           </Route>
           <Route path="/">
             {/* <PersistentDrawerLeft selectMenu={'home'}/> */}

@@ -21,11 +21,7 @@ import Switch from '@mui/material/Switch';
 import DeleteIcon from '@mui/icons-material/Delete';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import { visuallyHidden } from '@mui/utils';
-import Grid from '@mui/material/Grid';
-import { AppBar, TextField } from '@mui/material';
-import SearchIcon from '@mui/icons-material/Search';
 import axios from 'axios';
-
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -47,6 +43,7 @@ function getComparator(order, orderBy) {
 // need to support IE11, you can use Array.prototype.sort() directly
 function stableSort(array, comparator) {
   const stabilizedThis = array.map((el, index) => [el, index]);
+
   stabilizedThis.sort((a, b) => {
     const order = comparator(a[0], b[0]);
     if (order !== 0) {
@@ -59,30 +56,34 @@ function stableSort(array, comparator) {
 
 const headCells = [
   {
-        numeric: false,
-        disablePadding: true,
-        label: '코일 번호',
-    },
-    {
-        numeric: true,
-        disablePadding: false,
-        label: '길이',
-    },
-    {
-        numeric: true,
-        disablePadding: false,
-        label: '폭',
-    },
-    {
-        numeric: true,
-        disablePadding: false,
-        label: '두께',
-    },
+    numeric: false,
+    disablePadding: true,
+    label: '코일 번호',
+  },
+  {
+    numeric: true,
+    disablePadding: false,
+    label: '코일 두께',
+  },
+  {
+    numeric: true,
+    disablePadding: false,
+    label: '코일 넓이',
+  },
+  {
+    numeric: true,
+    disablePadding: false,
+    label: '코일 길이',
+  },
+  {
+    numeric: true,
+    disablePadding: false,
+    label: '공정 상태',
+  },
 ];
 
 function EnhancedTableHead(props) {
-  const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } =
-    props;
+  const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } = props;
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
   };
@@ -145,12 +146,10 @@ const EnhancedTableToolbar = (props) => {
         pl: { sm: 2 },
         pr: { xs: 1, sm: 1 },
         ...(numSelected > 0 && {
-          bgcolor: (theme) =>
-            alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity),
+          bgcolor: (theme) => alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity),
         }),
       }}
     >
-        
       {numSelected > 0 ? (
         <Typography
           sx={{ flex: '1 1 100%' }}
@@ -167,9 +166,7 @@ const EnhancedTableToolbar = (props) => {
           id="tableTitle"
           component="div"
         >
-          코일 정보
         </Typography>
-        
       )}
 
       {numSelected > 0 ? (
@@ -202,13 +199,13 @@ export default function EnhancedTable() {
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [rows, setRows] = React.useState([]);
 
-  const AdminProductFunc = async () => {
-    const jsonData = await axios.get("/process-service/product_log");
+  const HeatingLogFunc = async () => {
+    const jsonData = await axios.get("/stats-service/product_log");
     setRows(jsonData.data);
   }  
 
   React.useEffect(()=>{
-    AdminProductFunc();
+    HeatingLogFunc();
   },[]);
 
   const handleRequestSort = (event, property) => {
@@ -262,38 +259,12 @@ export default function EnhancedTable() {
   const isSelected = (name) => selected.indexOf(name) !== -1;
 
   // Avoid a layout jump when reaching the last page with empty rows.
-  const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
+  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
   return (
     <Box sx={{ width: '100%' }}>
       <Paper sx={{ width: '100%', mb: 2 }}>
         <EnhancedTableToolbar numSelected={selected.length} />
-        <AppBar
-        position="static"
-        color="default"
-        elevation={0}
-        sx={{ borderBottom: '1px solid rgba(0, 0, 0, 0.12)' }}
-      >
-        <Toolbar>
-          <Grid container spacing={2} alignItems="center">
-            <Grid item>
-              <SearchIcon color="inherit" sx={{ display: 'block' }} />
-            </Grid>
-            <Grid item xs>
-              <TextField
-                fullWidth
-                placeholder="코일번호로 검색할 수 있습니다."
-                InputProps={{
-                  disableUnderline: true,
-                  sx: { fontSize: 'default' },
-                }}
-                variant="standard"
-              />
-            </Grid>
-          </Grid>
-        </Toolbar>
-      </AppBar>
         <TableContainer>
           <Table
             sx={{ minWidth: 750 }}
@@ -344,9 +315,10 @@ export default function EnhancedTable() {
                       >
                         {row.productId}
                       </TableCell>
-                        <TableCell align="right">{row.length}</TableCell>
-                        <TableCell align="right">{row.width}</TableCell>
-                        <TableCell align="right">{row.thickness}</TableCell>
+                      <TableCell align="right">{row.thickness}</TableCell>
+                      <TableCell align="right">{row.width}</TableCell>
+                      <TableCell align="right">{row.length}</TableCell>
+                      <TableCell align="right">{row.productStatus}</TableCell>
                     </TableRow>
                   );
                 })}

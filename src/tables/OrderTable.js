@@ -21,11 +21,7 @@ import Switch from '@mui/material/Switch';
 import DeleteIcon from '@mui/icons-material/Delete';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import { visuallyHidden } from '@mui/utils';
-import Grid from '@mui/material/Grid';
-import { AppBar, TextField } from '@mui/material';
-import SearchIcon from '@mui/icons-material/Search';
 import axios from 'axios';
-
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -58,27 +54,48 @@ function stableSort(array, comparator) {
 }
 
 const headCells = [
+  {    
+    numeric: false,
+    disablePadding: true,
+    label: '주문번호',
+  },
   {
-        numeric: false,
-        disablePadding: true,
-        label: '코일 번호',
-    },
-    {
-        numeric: true,
-        disablePadding: false,
-        label: '길이',
-    },
-    {
-        numeric: true,
-        disablePadding: false,
-        label: '폭',
-    },
-    {
-        numeric: true,
-        disablePadding: false,
-        label: '두께',
-    },
+    numeric: true,
+    disablePadding: false,
+    label: '코일번호',
+  },
+  {    
+    numeric: true,
+    disablePadding: false,
+    label: '요청회사',
+  },
+  {    
+    numeric: true,
+    disablePadding: false,
+    label: '담당자',
+  },
+  {
+    numeric: true,
+    disablePadding: false,
+    label: '공정시작일',
+  },
+  {
+    numeric: true,
+    disablePadding: false,
+    label: '공정마감일',
+  },
+  {
+    numeric: true,
+    disablePadding: false,
+    label: '계획수량',
+  },
+  {
+    numeric: true,
+    disablePadding: false,
+    label: '주문상태',
+  },
 ];
+
 
 function EnhancedTableHead(props) {
   const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } =
@@ -150,7 +167,6 @@ const EnhancedTableToolbar = (props) => {
         }),
       }}
     >
-        
       {numSelected > 0 ? (
         <Typography
           sx={{ flex: '1 1 100%' }}
@@ -167,9 +183,8 @@ const EnhancedTableToolbar = (props) => {
           id="tableTitle"
           component="div"
         >
-          코일 정보
+          Nutrition
         </Typography>
-        
       )}
 
       {numSelected > 0 ? (
@@ -202,13 +217,13 @@ export default function EnhancedTable() {
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [rows, setRows] = React.useState([]);
 
-  const AdminProductFunc = async () => {
-    const jsonData = await axios.get("/process-service/product_log");
+  const ordersFunc = async () => {
+    const jsonData = await axios.get("/process-service/orders");
     setRows(jsonData.data);
   }  
 
   React.useEffect(()=>{
-    AdminProductFunc();
+    ordersFunc();
   },[]);
 
   const handleRequestSort = (event, property) => {
@@ -269,31 +284,6 @@ export default function EnhancedTable() {
     <Box sx={{ width: '100%' }}>
       <Paper sx={{ width: '100%', mb: 2 }}>
         <EnhancedTableToolbar numSelected={selected.length} />
-        <AppBar
-        position="static"
-        color="default"
-        elevation={0}
-        sx={{ borderBottom: '1px solid rgba(0, 0, 0, 0.12)' }}
-      >
-        <Toolbar>
-          <Grid container spacing={2} alignItems="center">
-            <Grid item>
-              <SearchIcon color="inherit" sx={{ display: 'block' }} />
-            </Grid>
-            <Grid item xs>
-              <TextField
-                fullWidth
-                placeholder="코일번호로 검색할 수 있습니다."
-                InputProps={{
-                  disableUnderline: true,
-                  sx: { fontSize: 'default' },
-                }}
-                variant="standard"
-              />
-            </Grid>
-          </Grid>
-        </Toolbar>
-      </AppBar>
         <TableContainer>
           <Table
             sx={{ minWidth: 750 }}
@@ -315,8 +305,7 @@ export default function EnhancedTable() {
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
                   const isItemSelected = isSelected(row.name);
-                  const labelId = `enhanced-table-checkbox-${index}`;
-
+                  const labelId = `enhanced-table-checkbox-${index}`;                  
                   return (
                     <TableRow
                       hover
@@ -342,11 +331,15 @@ export default function EnhancedTable() {
                         scope="row"
                         padding="none"
                       >
-                        {row.productId}
+                        {row.orderId}
                       </TableCell>
-                        <TableCell align="right">{row.length}</TableCell>
-                        <TableCell align="right">{row.width}</TableCell>
-                        <TableCell align="right">{row.thickness}</TableCell>
+                      <TableCell align="right">{row.productId}</TableCell>
+                      <TableCell align="right">{row.companyId}</TableCell>
+                      <TableCell align="right">{row.userId}</TableCell>
+                      <TableCell align="right">{row.processStart}</TableCell>
+                      <TableCell align="right">{row.processEnd}</TableCell>
+                      <TableCell align="right">{row.stockPlan}</TableCell>
+                      <TableCell align="right">{row.status}</TableCell>
                     </TableRow>
                   );
                 })}

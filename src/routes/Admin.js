@@ -12,13 +12,6 @@ import ClientList from '../admin/ClientList';
 import NewProduct from '../admin/NewProduct';
 import ProductInfo from '../admin/ProductInfo';
 
-const Drafts = () => {
-    return (
-        <div>
-            <h1><SupervisorAccountIcon/>가열로 데이터 모니터링</h1>
-        </div>
-    );
-};
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;

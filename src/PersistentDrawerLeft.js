@@ -12,18 +12,25 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import WebAssetIcon from '@mui/icons-material/WebAsset';
 import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
 import NestedGrid from './NestedGrid';
 import { Link } from 'react-router-dom';
 import Inbox from './routes/Inbox';
 import Starred from './routes/Starred';
 import Drafts from './routes/Drafts';
 import Admin from './routes/Admin';
+
 import { store } from './store/store';
+
+import Temp from './routes/dashboards/Temp';
+import Stock from './routes/dashboards/Stock';
+import Product from './routes/dashboards/Product';
+import Dashboard from './routes/dashboards/Dashboard';
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import HorizonLine from './HorizontalLine';
 
 
 const drawerWidth = 240;
@@ -111,10 +118,31 @@ export default function PersistentDrawerLeft({selectMenu}) {
     
   ]
 
+
   const adminSubeMenu =  {
     text: '관리자',
     link: '/submenu/admin'    
   }
+
+
+  const dashMenuList = [
+    {
+      text:'전체 통계',
+      link: '/dashmenu/dashboard'      
+    },
+    {
+      text:'온도 통계',
+      link: '/dashmenu/temp'      
+    },
+    {
+      text: '코일 불량률 통계',
+      link: '/dashmenu/product'      
+    },
+    {
+      text: '수량 통계',
+      link: '/dashmenu/stock'      
+    }
+  ]
 
 
   return (
@@ -156,6 +184,7 @@ export default function PersistentDrawerLeft({selectMenu}) {
         </DrawerHeader>
         <Divider />
 
+
         {state.userId === 'admin@poscoict.com' ? 
           <List>
                 <ListItem button key={adminSubeMenu.text}>
@@ -184,6 +213,31 @@ export default function PersistentDrawerLeft({selectMenu}) {
                 }                     
           </List>
       }
+
+        <List>       
+          {subMenuList.map((obj, index) => (
+              <ListItem button key={obj.text}>
+                  <ListItemIcon>
+                    <WebAssetIcon/>
+                  </ListItemIcon>
+                  <Link to={obj.link}>
+                    <ListItemText primary={obj.text} />
+                  </Link>
+              </ListItem>
+          ))}
+          <HorizonLine/>
+        </List>
+            {dashMenuList.map((obj, index) => (
+              <ListItem button key={obj.text}>
+                  <ListItemIcon>
+                    <DashboardIcon/>
+                  </ListItemIcon>
+                  <Link to={obj.link}>
+                    <ListItemText primary={obj.text} />
+                  </Link>
+              </ListItem>
+          ))}
+
         <Divider />
       </Drawer>
       <Main open={open}>
@@ -199,9 +253,19 @@ export default function PersistentDrawerLeft({selectMenu}) {
                     return <Drafts/>
                   case 'admin':
                     return <Admin />
+                    
+                  case 'dashboard':
+                    return <Dashboard />
+                  case 'temp':
+                    return <Temp />
+                  case 'stock':
+                    return <Stock />
+                  case 'product':
+                    return <Product />      
                 default:
                   return <NestedGrid/>
-               }               
+               }
+                   
              })()
            }
       </Main>
