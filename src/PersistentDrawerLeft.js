@@ -189,33 +189,18 @@ export default function PersistentDrawerLeft({selectMenu}) {
           <List>
                 <ListItem button key={adminSubeMenu.text}>
                       <ListItemIcon>
-                        <InboxIcon />
+                        <WebAssetIcon />
                       </ListItemIcon>
                       <Link to={adminSubeMenu.link}>
                         <ListItemText primary={adminSubeMenu.text} />
                       </Link>
                   </ListItem> 
           </List>
-        :
-
-          <List>
-                        
-                {subMenuList.map((obj, index) => (
-                    <ListItem button key={obj.text}>
-                        <ListItemIcon>
-                          {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                        </ListItemIcon>
-                        <Link to={obj.link}>
-                          <ListItemText primary={obj.text} />
-                        </Link>
-                    </ListItem>
-                ))
-                }                     
-          </List>
-      }
-
-        <List>       
+          :  
+        
+            <List> 
           {subMenuList.map((obj, index) => (
+              
               <ListItem button key={obj.text}>
                   <ListItemIcon>
                     <WebAssetIcon/>
@@ -224,20 +209,24 @@ export default function PersistentDrawerLeft({selectMenu}) {
                     <ListItemText primary={obj.text} />
                   </Link>
               </ListItem>
+            
           ))}
-          <HorizonLine/>
-        </List>
-            {dashMenuList.map((obj, index) => (
-              <ListItem button key={obj.text}>
-                  <ListItemIcon>
-                    <DashboardIcon/>
-                  </ListItemIcon>
-                  <Link to={obj.link}>
-                    <ListItemText primary={obj.text} />
-                  </Link>
-              </ListItem>
-          ))}
-
+            <HorizonLine/>  
+              {/* </List>      
+          
+          <List> */}
+              {dashMenuList.map((obj, index) => (
+                <ListItem button key={obj.text}>
+                    <ListItemIcon>
+                      <DashboardIcon/>
+                    </ListItemIcon>
+                    <Link to={obj.link}>
+                      <ListItemText primary={obj.text} />
+                    </Link>
+                </ListItem>
+            ))}
+            </List>
+      }
         <Divider />
       </Drawer>
       <Main open={open}>
