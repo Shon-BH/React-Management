@@ -59,25 +59,25 @@ function stableSort(array, comparator) {
 
 const headCells = [
   {
-        id: 'name',
+        id: 'memberId',
         numeric: false,
         disablePadding: true,
         label: '이름',
     },
     {
-      id: 'name',
+      id: 'memberEmail',
         numeric: true,
         disablePadding: false,
         label: '이메일 주소',
     },
     {
-        id: 'password',
+        id: 'memberPw',
         numeric: true,
         disablePadding: false,
         label: '비밀번호',
     },
     {
-        id: 'authDate',
+        id: 'memberUdate',
         numeric: true,
         disablePadding: false,
         label: '승인날짜',
@@ -224,19 +224,19 @@ export default function EnhancedTable() {
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
 
-      const newSelecteds = rows.map((n) => n.name);
+      const newSelecteds = rows.map((n) => n.memberId);
       setSelected(newSelecteds);
       return;
     }
     setSelected([]);
   };
 
-  const handleClick = (event, name) => {
-    const selectedIndex = selected.indexOf(name);
+  const handleClick = (event, memberId) => {
+    const selectedIndex = selected.indexOf(memberId);
     let newSelected = [];
 
     if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, name);
+      newSelected = newSelected.concat(selected, memberId);
     } else if (selectedIndex === 0) {
       newSelected = newSelected.concat(selected.slice(1));
     } else if (selectedIndex === selected.length - 1) {
@@ -320,17 +320,17 @@ export default function EnhancedTable() {
               {stableSort(rows, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
-                  const isItemSelected = isSelected(row.name);
+                  const isItemSelected = isSelected(row.memberId);
                   const labelId = `enhanced-table-checkbox-${index}`;
 
                   return (
                     <TableRow
                       hover
-                      onClick={(event) => handleClick(event, row.name)}
+                      onClick={(event) => handleClick(event, row.memberId)}
                       role="checkbox"
                       aria-checked={isItemSelected}
                       tabIndex={-1}
-                      key={row.name}
+                      key={row.memberId}
                       selected={isItemSelected}
                     >
                       <TableCell padding="checkbox">
