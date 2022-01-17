@@ -97,7 +97,7 @@ export default function PersistentDrawerLeft({selectMenu}) {
   const subMenuList = [
     {
       text:'생산계획등록',
-      link: '/'      
+      link: '/submenu/'      
     },
     {
       text:'생산계획목록',
@@ -187,6 +187,34 @@ export default function PersistentDrawerLeft({selectMenu}) {
 
         {state.userId.includes('admin@poscoict.com') ? 
           <List>
+            {subMenuList.map((obj, index) => (
+              
+              <ListItem button key={obj.text}>
+                  <ListItemIcon>
+                    <WebAssetIcon/>
+                  </ListItemIcon>
+                  <Link to={obj.link}>
+                    <ListItemText primary={obj.text} />
+                  </Link>
+              </ListItem>
+            
+          ))}
+            <HorizonLine/>  
+              {/* </List>      
+          
+          <List> */}
+              {dashMenuList.map((obj, index) => (
+                <ListItem button key={obj.text}>
+                    <ListItemIcon>
+                      <DashboardIcon/>
+                    </ListItemIcon>
+                    <Link to={obj.link}>
+                      <ListItemText primary={obj.text} />
+                    </Link>
+                </ListItem>
+            ))}
+                  <HorizonLine/>  
+
                 <ListItem button key={adminSubeMenu.text}>
                       <ListItemIcon>
                         <WebAssetIcon />
@@ -194,7 +222,7 @@ export default function PersistentDrawerLeft({selectMenu}) {
                       <Link to={adminSubeMenu.link}>
                         <ListItemText primary={adminSubeMenu.text} />
                       </Link>
-                  </ListItem> 
+                </ListItem> 
           </List>
           :  
         
