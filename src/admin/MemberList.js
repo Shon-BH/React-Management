@@ -264,7 +264,7 @@ export default function EnhancedTable() {
     setDense(event.target.checked);
   };
 
-  const isSelected = (name) => selected.indexOf(name) !== -1;
+  const isSelected = (newMemberId) => selected.indexOf(newMemberId) !== -1;
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
