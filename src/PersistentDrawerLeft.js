@@ -17,7 +17,7 @@ import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import NestedGrid from './NestedGrid';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import Inbox from './routes/Inbox';
 import Starred from './routes/Starred';
 import Drafts from './routes/Drafts';
@@ -31,6 +31,10 @@ import Product from './routes/dashboards/Product';
 import Dashboard from './routes/dashboards/Dashboard';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import HorizonLine from './HorizontalLine';
+
+import Button from '@mui/material/Button';
+import Stack from '@mui/material/Stack';
+import { Grid } from '@mui/material';
 
 
 const drawerWidth = 240;
@@ -144,6 +148,12 @@ export default function PersistentDrawerLeft({selectMenu}) {
     }
   ]
 
+  const history = useHistory();
+
+  const f1 = () => {
+    history.push("/");
+    
+  }
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -163,6 +173,11 @@ export default function PersistentDrawerLeft({selectMenu}) {
             MES 열연
           </Typography>
         </Toolbar>
+        <Stack  direction="row" justifyContent="flex-end">
+          <Button variant="contained" onClick={f1}>
+            로그아웃
+          </Button>
+        </Stack>
       </AppBar>
       <Drawer
         sx={{
