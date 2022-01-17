@@ -80,6 +80,7 @@ export default function SignUp() {
     const rePassword = data.get('rePassword');
     const { name, email, phone, password } = joinData;
 
+    /*
     // 이메일 유효성 체크
     const emailRegex = /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
     if (!emailRegex.test(email)) {
@@ -122,7 +123,7 @@ export default function SignUp() {
       alert('회원가입 약관에 동의해주세요.');
       return;
     }
-
+*/
     // if (
     //   emailRegex.test(email) &&
     //   passwordRegex.test(password) &&

@@ -203,7 +203,7 @@ export default function EnhancedTable() {
   const [rows, setRows] = React.useState([]);
 
   const AdminProductFunc = async () => {
-    const jsonData = await axios.get("/process-service/product_log");
+    const jsonData = await axios.get("/user-service/product_log");
     setRows(jsonData.data);
   }  
 
