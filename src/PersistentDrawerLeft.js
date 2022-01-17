@@ -173,11 +173,6 @@ export default function PersistentDrawerLeft({selectMenu}) {
             MES 열연
           </Typography>
         </Toolbar>
-        <Stack  direction="row" justifyContent="flex-end">
-          <Button variant="contained" onClick={f1}>
-            로그아웃
-          </Button>
-        </Stack>
       </AppBar>
       <Drawer
         sx={{
@@ -198,7 +193,6 @@ export default function PersistentDrawerLeft({selectMenu}) {
           </IconButton>
         </DrawerHeader>
         <Divider />
-
 
         {state.userId.includes('admin@poscoict.com') ? 
           <List>
@@ -237,7 +231,7 @@ export default function PersistentDrawerLeft({selectMenu}) {
                       <Link to={adminSubeMenu.link}>
                         <ListItemText primary={adminSubeMenu.text} />
                       </Link>
-                </ListItem> 
+                </ListItem>
           </List>
           :  
         
@@ -268,9 +262,15 @@ export default function PersistentDrawerLeft({selectMenu}) {
                     </Link>
                 </ListItem>
             ))}
-            </List>
+          </List>
+          
       }
         <Divider />
+        <Stack  justifyContent="right">
+          <Button variant="contained" onClick={f1}>
+            로그아웃
+          </Button>
+        </Stack>
       </Drawer>
       <Main open={open}>
         <DrawerHeader />
