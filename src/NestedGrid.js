@@ -234,7 +234,6 @@ export default function NestedGrid() {
           companyId : c.companyId,
         }
        tempCompanylist.push(temp);
-       // console.log(JSON.stringify(JSON.stringify(c)));
       });
 
       plist.map( (p) => {
@@ -253,7 +252,6 @@ export default function NestedGrid() {
     React.useEffect(()=> {
         // ProductAPI();
         // CompanyAPI();
-        console.log(state.userId, state.token);
         ProductPlanAPI();
     },[]);
 

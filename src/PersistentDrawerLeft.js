@@ -185,7 +185,7 @@ export default function PersistentDrawerLeft({selectMenu}) {
         <Divider />
 
 
-        {state.userId === 'admin@poscoict.com' ? 
+        {state.userId.includes('admin@poscoict.com') ? 
           <List>
                 <ListItem button key={adminSubeMenu.text}>
                       <ListItemIcon>

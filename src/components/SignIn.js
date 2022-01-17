@@ -52,7 +52,12 @@ export default function SignIn() {
         dispatch(setUserId(loginJson.userId));      
         
         alert("login success");
-        history.push("/");
+        if(loginJson.userId.includes('admin')){          
+          history.push('/submenu/admin');
+        }else{
+          history.push('/submenu/');
+        }
+
       }).catch(error => {
       // ... 에러 처리
       alert(error);      
