@@ -13,6 +13,7 @@ import WebAssetIcon from '@mui/icons-material/WebAsset';
 import axios from 'axios';
 import BasicDatePicker from './date/BasicDatePicker';
 import { store } from './store/store';
+import { Button, Stack } from '@mui/material';
 
 const Item = styled(Paper)(({ theme }) => ({
   ...theme.typography.body2,
@@ -295,8 +296,12 @@ export default function NestedGrid() {
 
     return (
           
-        <Box sx={{ flexGrow: 1 }}>
-          <button onClick={f1}> 버튼</button>
+      <Box sx={{ flexGrow: 1 }}>
+          <Stack direction="row" justifyContent="right">
+          <Button variant="contained" onClick={f1}>
+            등록
+          </Button>
+        </Stack>
           <form>
               
               <h1><WebAssetIcon />생산계획등록</h1>
