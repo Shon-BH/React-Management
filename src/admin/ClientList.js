@@ -61,22 +61,22 @@ const headCells = [
   {
     numeric: false,
     disablePadding: true,
+    label: '회사ID',
+  },
+  {
+    numeric: true,
+    disablePadding: false,
     label: '회사명',
   },
   {
     numeric: true,
     disablePadding: false,
-    label: '담당자 이름',
+    label: '회사 이메일',
   },
   {
     numeric: true,
     disablePadding: false,
-    label: '담당자 번호',
-  },
-  {
-    numeric: true,
-    disablePadding: false,
-    label: '담당자 이메일',
+    label: '회사 번호',
   },
 ];
 
@@ -203,7 +203,7 @@ export default function EnhancedTable() {
   const [rows, setRows] = React.useState([]);
 
   const AdminClientFunc = async () => {
-    const jsonData = await axios.get("/user-service/companies");
+    const jsonData = await axios.get("/user-service/admin/companies");
     setRows(jsonData.data);
   }  
 
@@ -229,7 +229,7 @@ export default function EnhancedTable() {
   const handleClick = (event, name) => {
     const selectedIndex = selected.indexOf(name);
     let newSelected = [];
-
+    
     if (selectedIndex === -1) {
       newSelected = newSelected.concat(selected, name);
     } else if (selectedIndex === 0) {
@@ -242,7 +242,7 @@ export default function EnhancedTable() {
         selected.slice(selectedIndex + 1),
       );
     }
-
+    
     setSelected(newSelected);
   };
 
