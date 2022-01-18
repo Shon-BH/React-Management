@@ -13,6 +13,7 @@ import WebAssetIcon from '@mui/icons-material/WebAsset';
 import axios from 'axios';
 import BasicDatePicker from './date/BasicDatePicker';
 import { store } from './store/store';
+import { Button, Stack } from '@mui/material';
 
 const Item = styled(Paper)(({ theme }) => ({
   ...theme.typography.body2,
@@ -267,7 +268,8 @@ export default function NestedGrid() {
         alert("수량이 숫자가 아닙니다.");
         setStockPlan(0);
       }
-      else{
+      else {
+        
         const planData = {
           userId : resUser.userId,
           productId : productId,
@@ -283,7 +285,11 @@ export default function NestedGrid() {
           },
         })
         .then(
-          (res) =>{console.log(res.data);}
+          (res) => {
+            console.log(res.data);
+            alert('등록이 완료 되었습니다. 생산계획목록을 확인해주세요');
+          }
+          
         ).catch(error => {
           // ... 에러 처리
           alert("error");      
@@ -295,8 +301,12 @@ export default function NestedGrid() {
 
     return (
           
-        <Box sx={{ flexGrow: 1 }}>
-          <button onClick={f1}> 버튼</button>
+      <Box sx={{ flexGrow: 1 }}>
+          <Stack direction="row" justifyContent="right">
+          <Button variant="contained" onClick={f1}>
+            등록
+          </Button>
+        </Stack>
           <form>
               
               <h1><WebAssetIcon />생산계획등록</h1>
