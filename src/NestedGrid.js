@@ -268,7 +268,8 @@ export default function NestedGrid() {
         alert("수량이 숫자가 아닙니다.");
         setStockPlan(0);
       }
-      else{
+      else {
+        
         const planData = {
           userId : resUser.userId,
           productId : productId,
@@ -284,7 +285,11 @@ export default function NestedGrid() {
           },
         })
         .then(
-          (res) =>{console.log(res.data);}
+          (res) => {
+            console.log(res.data);
+            alert('등록이 완료 되었습니다. 생산계획목록을 확인해주세요');
+          }
+          
         ).catch(error => {
           // ... 에러 처리
           alert("error");      
