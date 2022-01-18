@@ -5,7 +5,6 @@ import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
-import NewMember from '../admin/NewMember';
 import MemberList from '../admin/MemberList';
 import NewClient from '../admin/NewClient';
 import ClientList from '../admin/ClientList';
@@ -66,7 +65,6 @@ export default function BasicTabs() {
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
-        <NewMember/>
         <MemberList/>
       </TabPanel>
       <TabPanel value={value} index={1}>

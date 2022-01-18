@@ -18,14 +18,11 @@ import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
-import DeleteIcon from '@mui/icons-material/Delete';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import { visuallyHidden } from '@mui/utils';
-import Grid from '@mui/material/Grid';
-import { AppBar, TextField } from '@mui/material';
-import SearchIcon from '@mui/icons-material/Search';
+import { AppBar } from '@mui/material';
+import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded';
 import axios from 'axios';
-// import SearchBar from "materrarial-ui-search-bar";
 
 
 function descendingComparator(a, b, orderBy) {
@@ -44,8 +41,6 @@ function getComparator(order, orderBy) {
     : (a, b) => -descendingComparator(a, b, orderBy);
 }
 
-// This method is created for cross-browser compatibility, if you don't
-// need to support IE11, you can use Array.prototype.sort() directly
 function stableSort(array, comparator) {
   const stabilizedThis = array.map((el, index) => [el, index]);
   stabilizedThis.sort((a, b) => {
@@ -60,28 +55,22 @@ function stableSort(array, comparator) {
 
 const headCells = [
   {
-        id: 'memberId',
+        id: 'newMemberId',
         numeric: false,
         disablePadding: true,
+        label: '아이디',
+    },
+    {
+        id: 'newMemberEmail',
+        numeric: true,
+        disablePadding: false,
         label: '이름',
     },
     {
-      id: 'memberEmail',
+        id: 'newMemberUpdate',
         numeric: true,
         disablePadding: false,
-        label: '이메일 주소',
-    },
-    {
-        id: 'memberPw',
-        numeric: true,
-        disablePadding: false,
-        label: '비밀번호',
-    },
-    {
-        id: 'memberUdate',
-        numeric: true,
-        disablePadding: false,
-        label: '승인날짜',
+        label: '번호',
     },
 ];
 
@@ -172,15 +161,15 @@ const EnhancedTableToolbar = (props) => {
           id="tableTitle"
           component="div"
         >
-          기존 회원
+          회원 목록
         </Typography>
         
       )}
 
       {numSelected > 0 ? (
-        <Tooltip title="Delete">
+        <Tooltip title="Add">
           <IconButton>
-            <DeleteIcon />
+            <AddCircleOutlineRoundedIcon />
           </IconButton>
         </Tooltip>
       ) : (
@@ -200,20 +189,20 @@ EnhancedTableToolbar.propTypes = {
 
 export default function EnhancedTable() {
   const [order, setOrder] = React.useState('asc');
-  const [orderBy, setOrderBy] = React.useState('memberId');
+  const [orderBy, setOrderBy] = React.useState('userId');
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [rows, setRows] = React.useState([]);
 
-  const AdminMemberFunc = async () => {
-    const jsonData = await axios.get("/user-service/admin_member");
+  const AdminNewMemberFunc = async () => {
+    const jsonData = await axios.get("/user-service/user");
     setRows(jsonData.data);
   }  
 
   React.useEffect(()=>{
-    AdminMemberFunc();
+    AdminNewMemberFunc();
   },[]);
 
   const handleRequestSort = (event, property) => {
@@ -224,20 +213,19 @@ export default function EnhancedTable() {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-
-      const newSelecteds = rows.map((n) => n.memberId);
+      const newSelecteds = rows.map((n) => n.newMemberId);
       setSelected(newSelecteds);
       return;
     }
     setSelected([]);
   };
 
-  const handleClick = (event, memberId) => {
-    const selectedIndex = selected.indexOf(memberId);
+  const handleClick = (event, newMemberId) => {
+    const selectedIndex = selected.indexOf(newMemberId);
     let newSelected = [];
 
     if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, memberId);
+      newSelected = newSelected.concat(selected, newMemberId);
     } else if (selectedIndex === 0) {
       newSelected = newSelected.concat(selected.slice(1));
     } else if (selectedIndex === selected.length - 1) {
@@ -281,26 +269,7 @@ export default function EnhancedTable() {
         elevation={0}
         sx={{ borderBottom: '1px solid rgba(0, 0, 0, 0.12)' }}
       >
-        <Toolbar>
-          <Grid container spacing={2} alignItems="center">
-            <Grid item>
-              <SearchIcon color="inherit" sx={{ display: 'block' }} />
-            </Grid>
-            <Grid item xs>
-              <TextField
-                fullWidth
-                placeholder="이름, 이메일 주소로 검색할 수 있습니다."
-                InputProps={{
-                  disableUnderline: true,
-                  sx: { fontSize: 'default' },
-                }}
-                variant="standard"
-              />
-            </Grid>
-          </Grid>
-        </Toolbar>
       </AppBar>
-        <EnhancedTableToolbar numSelected={selected.length} />
         <TableContainer>
           <Table
             sx={{ minWidth: 750 }}
@@ -321,17 +290,17 @@ export default function EnhancedTable() {
               {stableSort(rows, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
-                  const isItemSelected = isSelected(row.memberId);
+                  const isItemSelected = isSelected(row.newMemberId);
                   const labelId = `enhanced-table-checkbox-${index}`;
 
                   return (
                     <TableRow
                       hover
-                      onClick={(event) => handleClick(event, row.memberId)}
+                      onClick={(event) => handleClick(event, row.newMemberId)}
                       role="checkbox"
                       aria-checked={isItemSelected}
                       tabIndex={-1}
-                      key={row.memberId}
+                      key={row.newMemberId}
                       selected={isItemSelected}
                     >
                       <TableCell padding="checkbox">
@@ -349,11 +318,10 @@ export default function EnhancedTable() {
                         scope="row"
                         padding="none"
                       >
-                        {row.memberId}
+                        {row.userId}
                       </TableCell>
-                        <TableCell align="right">{row.memberPw}</TableCell>
-                        <TableCell align="right">{row.memberEmail}</TableCell>
-                        <TableCell align="right">{row.memberUpdate}</TableCell>
+                        <TableCell align="right">{row.name}</TableCell>
+                        <TableCell align="right">{row.phone}</TableCell>
                     </TableRow>
                   );
                 })}

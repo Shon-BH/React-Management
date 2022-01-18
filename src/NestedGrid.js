@@ -5,7 +5,6 @@ import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 import HorizonLine from './HorizontalLine';
-import Table1 from './tables/Table1';
 import Table2 from './tables/Table2';
 import ComboBoxCompany from './comboboxes/ComboBoxCompany';
 import ComboBoxProduct from './comboboxes/ComboBoxProduct';
@@ -324,10 +323,7 @@ export default function NestedGrid() {
                 </Grid>
                 <HorizonLine />
               </Grid>
-                
-            
-            <h1><FormatListBulletedIcon />주문내역</h1>
-                <Table1 />
+              
             <h1><FormatListBulletedIcon />코일정보</h1>
                 <Table2 />
                 
