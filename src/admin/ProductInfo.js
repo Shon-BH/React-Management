@@ -137,7 +137,26 @@ EnhancedTableHead.propTypes = {
 };
 
 const EnhancedTableToolbar = (props) => {
-  const { numSelected } = props;
+  const { numSelected, selectedList } = props;
+
+  const onClickEvent = (e) => {
+    
+    //const checks = JSON.stringify(selectedList);   
+
+    //console.log(JSON.stringify({checks : selectedList}));
+    axios.post('/user-service/admin/checks/products', JSON.stringify({checks : selectedList}), {
+     headers: {
+        "Content-Type": "application/json",
+     }, 
+    })
+      .then(response => {      
+        alert('삭제완료');
+        window.location.reload();
+      }).catch(error => {
+      // ... 에러 처리
+      alert(error);      
+    });
+   }
 
   return (
     <Toolbar
@@ -174,7 +193,7 @@ const EnhancedTableToolbar = (props) => {
 
       {numSelected > 0 ? (
         <Tooltip title="Delete">
-          <IconButton>
+          <IconButton onClick={onClickEvent}>            
             <DeleteIcon />
           </IconButton>
         </Tooltip>
@@ -229,7 +248,7 @@ export default function EnhancedTable() {
   const handleClick = (event, name) => {
     const selectedIndex = selected.indexOf(name);
     let newSelected = [];
-
+    
     if (selectedIndex === -1) {
       newSelected = newSelected.concat(selected, name);
     } else if (selectedIndex === 0) {
@@ -242,8 +261,8 @@ export default function EnhancedTable() {
         selected.slice(selectedIndex + 1),
       );
     }
-
     setSelected(newSelected);
+    
   };
 
   const handleChangePage = (event, newPage) => {
@@ -268,7 +287,7 @@ export default function EnhancedTable() {
   return (
     <Box sx={{ width: '100%' }}>
       <Paper sx={{ width: '100%', mb: 2 }}>
-        <EnhancedTableToolbar numSelected={selected.length} />
+        <EnhancedTableToolbar numSelected={selected.length} selectedList={selected} />
         <AppBar
         position="static"
         color="default"
@@ -296,17 +315,17 @@ export default function EnhancedTable() {
               {stableSort(rows, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
-                  const isItemSelected = isSelected(row.name);
+                  const isItemSelected = isSelected(row.productId);
                   const labelId = `enhanced-table-checkbox-${index}`;
 
                   return (
                     <TableRow
                       hover
-                      onClick={(event) => handleClick(event, row.name)}
+                      onClick={(event) => handleClick(event, row.productId)}
                       role="checkbox"
                       aria-checked={isItemSelected}
                       tabIndex={-1}
-                      key={row.name}
+                      key={row.productId}
                       selected={isItemSelected}
                     >
                       <TableCell padding="checkbox">

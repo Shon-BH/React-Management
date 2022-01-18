@@ -137,7 +137,23 @@ EnhancedTableHead.propTypes = {
 };
 
 const EnhancedTableToolbar = (props) => {
-  const { numSelected } = props;
+  const { numSelected, selectedList } = props;
+
+  const onClickEvent = (e) => {
+    
+    axios.post('/user-service/admin/checks/companies', JSON.stringify({checks : selectedList}), {
+     headers: {
+        "Content-Type": "application/json",
+     }, 
+    })
+      .then(response => {      
+        alert('삭제완료');
+        window.location.reload();
+      }).catch(error => {
+      // ... 에러 처리
+      alert(error);      
+    });
+   }
 
   return (
     <Toolbar
@@ -174,7 +190,7 @@ const EnhancedTableToolbar = (props) => {
 
       {numSelected > 0 ? (
         <Tooltip title="Delete">
-          <IconButton>
+          <IconButton onClick={onClickEvent}>
             <DeleteIcon />
           </IconButton>
         </Tooltip>
@@ -268,7 +284,7 @@ export default function EnhancedTable() {
   return (
     <Box sx={{ width: '100%' }}>
       <Paper sx={{ width: '100%', mb: 2 }}>
-        <EnhancedTableToolbar numSelected={selected.length} />
+        <EnhancedTableToolbar numSelected={selected.length} selectedList={selected}/>
         <AppBar
         position="static"
         color="default"
@@ -296,17 +312,17 @@ export default function EnhancedTable() {
               {stableSort(rows, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
-                  const isItemSelected = isSelected(row.name);
+                  const isItemSelected = isSelected(row.companyId);
                   const labelId = `enhanced-table-checkbox-${index}`;
 
                   return (
                     <TableRow
                       hover
-                      onClick={(event) => handleClick(event, row.name)}
+                      onClick={(event) => handleClick(event, row.companyId)}
                       role="checkbox"
                       aria-checked={isItemSelected}
                       tabIndex={-1}
-                      key={row.name}
+                      key={row.companyId}
                       selected={isItemSelected}
                     >
                       <TableCell padding="checkbox">
