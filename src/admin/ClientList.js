@@ -343,8 +343,8 @@ export default function EnhancedTable() {
                         {row.companyId}
                       </TableCell>
                       <TableCell align="right">{row.name}</TableCell>
-                      <TableCell align="right">{row.phone}</TableCell>
                       <TableCell align="right">{row.email}</TableCell>
+                      <TableCell align="right">{row.phone}</TableCell>
                     </TableRow>
                   );
                 })}

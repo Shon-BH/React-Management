@@ -31,24 +31,24 @@ export default function ProductChart() {
 
   function anotherReaf() {
     let cnts = [0, 0, 0, 0, 0];
-    let ids =["ANCOR-C", "ANCOR-H", "JS-SECC", "SAE1070", "KS-SECC"]
+    let ids =["HAY106290", "HAY106291", "HAY106292", "HAY106293", "HAY106294"]
     let array = []
 
     // eslint-disable-next-line array-callback-return
     rows.map((row) => {
-      if (row.productId === "ANCOR-C" && row.productStatus === "불량") {
+      if (row.productId === "HAY106290" && row.productStatus === "불량") {
         cnts[0] += 1;
       }
-      else if (row.productId === "ANCOR-H" && row.productStatus === "불량") {
+      else if (row.productId === "HAY106291" && row.productStatus === "불량") {
         cnts[1] += 1;
       }
-      else if (row.productId === "JS-SECC" && row.productStatus === "불량") {
+      else if (row.productId === "HAY106292" && row.productStatus === "불량") {
         cnts[2] += 1;
       }
-      else if (row.productId === "SAE1070" && row.productStatus === "불량") {
+      else if (row.productId === "HAY106293" && row.productStatus === "불량") {
         cnts[3] += 1;
       }
-      else if (row.productId === "KS-SECC" && row.productStatus === "불량") {
+      else if (row.productId === "HAY106294" && row.productStatus === "불량") {
         cnts[4] += 1;
       }
     });
